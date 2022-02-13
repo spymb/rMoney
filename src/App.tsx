@@ -6,13 +6,35 @@ import {
   Link,
   Navigate
 } from 'react-router-dom';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  height: 100vh;
+  display:flex;
+  flex-direction: column;
+`;
+const Main = styled.div`
+  flex-grow: 1;
+  overflow: auto;
+`;
+const Nav = styled.nav`
+  border: 1px solid blue;
+  > ul {
+    display:flex;
+    > li{
+      width: 33.3333%;
+      text-align:center;
+      padding: 16px;
+    }
+  }
+`;
 
 function App() {
   return (
   <Router>
-    <div>
+    <Wrapper>
 
-      <div>
+      <Main>
         <Routes>
           <Route path="/tags" element={<Tags/>} />
           <Route path="/money" element={<Money/>} />
@@ -20,9 +42,9 @@ function App() {
           <Route path="/" element={<Navigate replace to="/money" />} />
           <Route path="*" element={<NoMatch/>} />
         </Routes>
-      </div>
+      </Main>
 
-      <div>
+      <Nav>
         <ul>
           <li>
             <Link to="/tags">标签页</Link>
@@ -34,9 +56,9 @@ function App() {
             <Link to="/statistics">统计页</Link>
           </li>
         </ul>
-      </div>
+      </Nav>
 
-    </div>
+    </Wrapper>
   </Router>
 );
 }
