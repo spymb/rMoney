@@ -91,6 +91,7 @@
   },
   "devDependencies": {
     "@types/styled-components": "^5.1.22",
+    "@types/webpack-env": "^1.16.3",
     "svg-sprite-loader": "^6.0.11",
     "svgo-loader": "^3.0.0"
   },
