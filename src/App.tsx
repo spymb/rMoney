@@ -5,40 +5,22 @@ import {
   Route,
   Navigate
 } from 'react-router-dom';
-import styled from 'styled-components';
-import Nav from './components/Nav'
-
-const Wrapper = styled.div`
-  height: 100vh;
-  display:flex;
-  flex-direction: column;
-`;
-const Main = styled.div`
-  flex-grow: 1;
-  overflow: auto;
-`;
-
+import Layout from './components/Layout';
 
 function App() {
   return (
-  <Router>
-    <Wrapper>
-
-      <Main>
+    <Router>
+      <Layout>
         <Routes>
-          <Route path="/tags" element={<Tags/>} />
-          <Route path="/money" element={<Money/>} />
-          <Route path="/statistics" element={<Statistics/>} />
-          <Route path="/" element={<Navigate replace to="/money" />} />
-          <Route path="*" element={<NoMatch/>} />
+          <Route path="/tags" element={<Tags/>}/>
+          <Route path="/money" element={<Money/>}/>
+          <Route path="/statistics" element={<Statistics/>}/>
+          <Route path="/" element={<Navigate replace to="/money"/>}/>
+          <Route path="*" element={<NoMatch/>}/>
         </Routes>
-      </Main>
-
-      <Nav/>
-
-    </Wrapper>
-  </Router>
-);
+      </Layout>
+    </Router>
+  );
 }
 
 function NoMatch() {
