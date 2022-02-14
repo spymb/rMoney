@@ -1,8 +1,11 @@
 import React from 'react';
+import Layout from '../components/Layout';
 
 function Statistics() {
   return (
-    <h2>统计页面</h2>
+    <Layout>
+      <h2>统计页面</h2>
+    </Layout>
   );
 }
 

@@ -6,7 +6,7 @@ import {
   Navigate
 } from 'react-router-dom';
 import Tags from './views/Tags';
-import Money from './views/Money';
+import Money from './views/money/Money';
 import Statistics from './views/Statistics';
 import NoMatch from './views/NoMatch';
 import styled from 'styled-components';
