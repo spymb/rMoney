@@ -5,16 +5,20 @@ import {
   Route,
   Navigate
 } from 'react-router-dom';
-import Layout from './components/Layout';
 import Tags from './views/Tags';
 import Money from './views/Money';
 import Statistics from './views/Statistics';
 import NoMatch from './views/NoMatch';
+import styled from 'styled-components';
+
+const AppWrapper = styled.div`
+  color: #333;
+`;
 
 function App() {
   return (
-    <Router>
-      <Layout>
+    <AppWrapper>
+      <Router>
         <Routes>
           <Route path="/tags" element={<Tags/>}/>
           <Route path="/money" element={<Money/>}/>
@@ -22,8 +26,9 @@ function App() {
           <Route path="/" element={<Navigate replace to="/money"/>}/>
           <Route path="*" element={<NoMatch/>}/>
         </Routes>
-      </Layout>
-    </Router>
+      </Router>
+    </AppWrapper>
+
   );
 }
 
