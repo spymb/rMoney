@@ -22,7 +22,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/tags" element={<Tags/>}/>
-          <Route path="/tags/:tag" element={<Tag/>}/>
+          <Route path="/tags/:id" element={<Tag/>}/>
           <Route path="/money" element={<Money/>}/>
           <Route path="/statistics" element={<Statistics/>}/>
           <Route path="/" element={<Navigate replace to="/money"/>}/>
