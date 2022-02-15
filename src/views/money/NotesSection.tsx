@@ -5,12 +5,18 @@ const Wrapper = styled.section`
   background: #f5f5f5;
   padding: 0 16px;
   font-size: 14px;
+
   > label {
-    display:flex;
+    display: flex;
     align-items: center;
-    > span { margin-right: 16px; white-space: nowrap; }
+
+    > span {
+      margin-right: 16px;
+      white-space: nowrap;
+    }
+
     > input {
-      display:block;
+      display: block;
       width: 100%;
       height: 72px;
       background: none;
@@ -19,14 +25,19 @@ const Wrapper = styled.section`
   }
 `;
 
-const NotesSection: React.FC = () => {
-  const [notes, setNotes] = useState('')
-  const refInput = useRef<HTMLInputElement>(null)
+type Props = {
+  value: string
+  onChange: (value: string) => void
+}
+
+const NotesSection: React.FC<Props> = (props) => {
+  const notes = props.value;
+  const refInput = useRef<HTMLInputElement>(null);
   const onBlur = () => {
     if (refInput.current !== null) {
-      setNotes(refInput.current.value)
+      props.onChange(refInput.current.value);
     }
-  }
+  };
 
   return (
     <Wrapper>
@@ -39,8 +50,8 @@ const NotesSection: React.FC = () => {
         />
       </label>
     </Wrapper>
-  )
+  );
 
-}
+};
 
-export {NotesSection}
+export {NotesSection};
