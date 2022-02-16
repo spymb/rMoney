@@ -7,25 +7,25 @@ import Icon from '../../components/Icon';
 import {Input} from '../../components/Input';
 import {Center} from '../../components/Center';
 import {Space} from '../../components/Space';
-import { Button } from 'components/Button';
+import {Button} from 'components/Button';
 
 const Topbar = styled.header`
-  display:flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
   line-height: 20px;
   padding: 14px;
-  background:white;
+  background: white;
 `;
 
 const InputWrapper = styled.div`
-  background:white;
+  background: white;
   padding: 0 16px;
   margin-top: 8px;
 `;
 
 const Tag: React.FC = () => {
-  const {findTag} = useTags();
+  const {findTag, updateTag} = useTags();
   let {id} = useParams();
   const tag = findTag(parseInt(id as string));
 
@@ -38,7 +38,12 @@ const Tag: React.FC = () => {
       </Topbar>
 
       <InputWrapper>
-        <Input label="标签名" type="text" placeholder="标签名" value={tag.name}/>
+        <Input label="标签名" type="text" placeholder="标签名" value={tag.name}
+               onChange={
+                 (e) => {
+                   updateTag(tag.id, {name: e.target.value});
+                 }
+               }/>
       </InputWrapper>
 
       <Center>
@@ -48,7 +53,7 @@ const Tag: React.FC = () => {
         <Button>删除标签</Button>
       </Center>
     </Layout>
-  )
+  );
 };
 
 export {Tag};
