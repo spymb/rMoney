@@ -24,6 +24,7 @@ function Statistics() {
   const [category, setCategory] = useState<'-' | '+'>('-');
   const {records} = useRecords();
   const {getTagName} = useTags();
+  const recordsByC = records.filter(r => r.category === category)
 
   return (
     <Layout>
@@ -32,10 +33,10 @@ function Statistics() {
 
       <div>
         {
-          records.map(r => {
-            return <Item>
+          recordsByC.map(r => {
+            return <Item key={r.createdAt}>
               <div className="tags">
-                {r.tagIDs.map(id => <span>{getTagName(id)}</span>)}
+                {r.tagIDs.map(id => <span key={id}>{getTagName(id)}</span>)}
               </div>
 
               {r.notes && <div className="notes">{r.notes}</div>}
