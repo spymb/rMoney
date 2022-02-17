@@ -17,8 +17,8 @@ const useTags = () => {
     setTags(localTags);
   }, []);
   useUpdate(() => {
-    window.localStorage.setItem('tags', JSON.stringify(tags))
-  }, [tags])
+    window.localStorage.setItem('tags', JSON.stringify(tags));
+  }, [tags]);
   const findTag = (id: number) => tags.filter(tag => tag.id === id)[0];
   const findTagIndex = (id: number) => {
     let result = -1;
@@ -37,12 +37,17 @@ const useTags = () => {
     setTags(tags.filter(tag => tag.id !== id));
   };
   const addTag = () => {
-    const tagName = window.prompt('请输入新标签名')
+    const tagName = window.prompt('请输入新标签名');
     if (tagName !== null && tagName !== '') {
-      setTags([...tags, {id: createID(), name: tagName}])
+      setTags([...tags, {id: createID(), name: tagName}]);
     }
-  }
-  return {tags, setTags, findTag, findTagIndex, updateTag, deleteTag, addTag};
+  };
+  const getTagName = (id: number) => {
+    const tag = findTag(id)
+    return tag ? tag.name : '';
+  };
+
+  return {tags, setTags, findTag, findTagIndex, updateTag, deleteTag, addTag, getTagName};
 };
 
 export {useTags};
