@@ -22,29 +22,30 @@ const defaultFormData = {
 };
 
 function Money() {
-  const [selected, setSelected] = useState(defaultFormData);
+  const [formData, setFormData] = useState(defaultFormData);
   const {addRecord} = useRecords()
 
-  const onChange = (obj: Partial<typeof selected>) => {
-    setSelected({...selected, ...obj});
+  const onChange = (obj: Partial<typeof formData>) => {
+    setFormData({...formData, ...obj});
   };
   const submit = () => {
-    addRecord(selected)
-    setSelected(defaultFormData)
+    if (addRecord(formData)) {
+      setFormData(defaultFormData);
+    }
   }
 
   return (
     <MyLayout>
-      <TagsSection value={selected.tagIDs}
+      <TagsSection value={formData.tagIDs}
                    onChange={tagIDs => onChange({tagIDs})}/>
 
-      <NotesSection value={selected.notes}
+      <NotesSection value={formData.notes}
                     onChange={notes => onChange({notes})}/>
 
-      <CategorySection value={selected.category}
+      <CategorySection value={formData.category}
                        onChange={category => onChange({category})}/>
 
-      <NumberPadSection value={selected.amount}
+      <NumberPadSection value={formData.amount}
                         onChange={amount => onChange({amount})}
                         onOk={submit}/>
     </MyLayout>
