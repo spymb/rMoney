@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
-import {useTags} from '../tags/useTags';
+import {useTags} from '../../hooks/useTags';
 
 const Wrapper = styled.section`
   background: #FFFFFF;
@@ -67,7 +67,7 @@ const TagsSection: React.FC<Props> = (props) => {
           </li>
         )}
       </ol>
-      <button onClick={() => {addTag()}}>新增标签</button>
+      <button onClick={addTag}>新增标签</button>
     </Wrapper>
   );
 };
