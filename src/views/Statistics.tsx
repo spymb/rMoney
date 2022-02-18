@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ReactNode, useState} from 'react';
 import Layout from '../components/Layout';
 import {RecordItem, useRecords} from '../hooks/useRecords';
 import {useTags} from '../hooks/useTags';
@@ -67,7 +67,11 @@ function Statistics() {
                 records.map(r => {
                   return <Item key={r.createdAt}>
                     <div className="tags">
-                      {r.tagIDs.map(id => <span key={id}>{getTagName(id)}</span>)}
+                      {r.tagIDs
+                        .map(tagID => <span key={tagID}>{getTagName(tagID)}</span>)
+                        .reduce((result, span, index, array) =>
+                          result.concat(index < array.length - 1 ? [span, '、'] : [span]), [] as ReactNode[])
+                      }
                     </div>
 
                     {r.notes && <div className="notes">{r.notes}</div>}
