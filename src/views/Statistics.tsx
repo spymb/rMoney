@@ -57,7 +57,7 @@ function Statistics() {
 
       {
         array.map(([date, records]) =>
-          <div>
+          <div key={date}>
             <Header>
               {date}
             </Header>
