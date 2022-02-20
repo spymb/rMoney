@@ -3,43 +3,54 @@ import React, {useState} from 'react';
 import {useTags} from '../../../hooks/useTags';
 import Icon from '../../../components/Icon';
 import {CategorySection} from '../CategorySection';
-
-const gap = '20px';
-const iconSize = '60%';
-
-const Wrapper = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  padding: ${parseInt(gap) / 2}px;
-  align-items: flex-start;
-`
-const TagItem = styled.li`
-  width: 20%;
-  margin: ${parseInt(gap) / 2}px 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-const IconWrapper = styled.div`
-  width: 50px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
-  background-color: #eeeeee;
-  margin-bottom: 6px;
-
-  &.selected {
-    background-color: #42a5f5;
-
-    > .icon {
-      fill: #fff;
+const Wrapper = styled.section`
+  font-size: 12px;
+  flex: 5;
+  overflow: auto;
+  border-bottom: 1px solid #333333;
+  ::-webkit-scrollbar {
+    display: none; 
+  }
+  > ol {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 4px 0;
+    > li {
+      width: 20%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 4px 0;
+      cursor:pointer;
+      > div {
+        width: 70%;
+        height: 45px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .icon {
+          fill: #B4B6B3;
+          width: 26px;
+          height: 26px;
+        }
+      }
+      > span {
+        margin-top: 3px;
+      }
+      &.selected {
+        color: #005DFF;
+        > div {
+          background: #E8F1FF;
+          .icon {
+            fill: #005DFF;
+          }
+        }
+      }
     }
   }
 `;
+
 
 type Props = {
   value: number[]
@@ -49,7 +60,7 @@ type Props = {
 const TagsSection: React.FC<Props> = (props) => {
   const {tags, addTag} = useTags();
   const [category, setCategory] = useState<'-' | '+'>('-');
-  const tagsByType = tags.filter(tag => tag.type === category)
+  const tagsByType = tags.filter(tag => tag.type === category);
 
   const selectedTagIDs = props.value;
   const onToggleTag = (tagID: number) => {
@@ -63,33 +74,32 @@ const TagsSection: React.FC<Props> = (props) => {
   const getClass = (tagID: number) => selectedTagIDs.indexOf(tagID) >= 0 ? 'selected' : '';
 
   return (
-    <div>
+    <Wrapper>
       <CategorySection value={category}
                        onChange={value => setCategory(value)}/>
 
-      <Wrapper>
+      <ol>
         {
           tagsByType.map(tag => {
             return (
-              <TagItem key={tag.id} onClick={() => onToggleTag(tag.id)}>
-                <IconWrapper className={getClass(tag.id)}>
-                  <Icon className="icon" name={tag.icon} size={iconSize}/>
-                </IconWrapper>
-                {tag.name}
-              </TagItem>
+              <li key={tag.id} onClick={() => onToggleTag(tag.id)}
+                       className={getClass(tag.id)}>
+                <div>
+                  <Icon className="icon" name={tag.icon}/>
+                </div>
+                <span>{tag.name}</span>
+              </li>
             );
           })}
 
-        {
-          <TagItem onClick={addTag}>
-            <IconWrapper>
-              <Icon className="icon" name="tianjia" size={iconSize}/>
-            </IconWrapper>
-            添加
-          </TagItem>
-        }
-      </Wrapper>
-    </div>
+        <li onClick={addTag}>
+          <div>
+            <Icon className="icon" name="tianjia"/>
+          </div>
+          <span>添加</span>
+        </li>
+      </ol>
+    </Wrapper>
 
   );
 };
