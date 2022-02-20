@@ -30,7 +30,6 @@ const Wrapper = styled.section`
         justify-content: center;
         align-items: center;
         .icon {
-          fill: #B4B6B3;
           width: 26px;
           height: 26px;
         }
