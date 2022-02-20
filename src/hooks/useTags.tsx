@@ -2,20 +2,34 @@ import {useEffect, useState} from 'react';
 import {createID} from '../lib/createID';
 import {useUpdate} from './useUpdate';
 
+export type Tag = {
+  id: number;
+  name: string;
+  icon?: string;
+  type?: '+' | '-';
+}
+
 const useTags = () => {
-  const [tags, setTags] = useState<{ id: number; name: string }[]>([]);
+  const [tags, setTags] = useState<Tag[]>([]);
+
   useEffect(() => {
     let localTags = JSON.parse(window.localStorage.getItem('tags') || '[]');
     if (localTags.length === 0) {
       localTags = [
-        {id: createID(), name: '衣'},
-        {id: createID(), name: '食'},
-        {id: createID(), name: '住'},
-        {id: createID(), name: '行'},
+        {id: createID(), name: "餐饮", icon: "canyin", type: "-"},
+        {id: createID(), name: "服饰", icon: "fushi", type: "-"},
+        {id: createID(), name: "读书", icon: "dushu", type: "-"},
+        {id: createID(), name: "交通", icon: "jiaotong", type: "-"},
+        {id: createID(), name: "旅行", icon: "lvxing", type: "-"},
+        {id: createID(), name: "日用", icon: "riyongpin", type: "-"},
+        {id: createID(), name: "工资", icon: "gongzi", type: "+"},
+        {id: createID(), name: "兼职", icon: "jianzhi", type: "+"},
+        {id: createID(), name: "理财", icon: "licai", type: "+"}
       ];
     }
     setTags(localTags);
   }, []);
+
   useUpdate(() => {
     window.localStorage.setItem('tags', JSON.stringify(tags));
   }, [tags]);
