@@ -129,11 +129,11 @@ const TagsSection: React.FC<Props> = (props) => {
             );
           })}
 
-        <Link to="/addTag">
+        <Link to="/setTag">
           <div>
-            <Icon className="icon" name="tianjia"/>
+            <Icon className="icon" name="settings"/>
           </div>
-          <span>添加</span>
+          <span>设置</span>
         </Link>
 
       </ol>
