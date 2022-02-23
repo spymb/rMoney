@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Icon from '../../../components/Icon';
 import {useNavigate} from 'react-router-dom';
 import {EditTag} from './EditTag';
-import {IconList} from './TagList';
+import {IconList} from './IconList';
 
 const Wrapper = styled.div`
   display: flex;

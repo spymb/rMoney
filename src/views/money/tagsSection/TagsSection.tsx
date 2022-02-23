@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-import React, {useState} from 'react';
+import React, {ReactNode, useState} from 'react';
 import {useTags} from '../../../hooks/useTags';
 import Icon from '../../../components/Icon';
 import {CategorySection} from '../CategorySection';
-import {Link} from 'react-router-dom';
 
 const Wrapper = styled.section`
   font-size: 12px;
@@ -14,7 +13,9 @@ const Wrapper = styled.section`
   ::-webkit-scrollbar {
     display: none;
   }
-
+  > div {
+    border: 1px solid red
+  }
   > ol {
     display: flex;
     flex-wrap: wrap;
@@ -85,13 +86,17 @@ const Wrapper = styled.section`
         margin-top: 3px;
       }
     }
-}
+  }
+  
 `;
 
 
 type Props = {
+  // 用于选中标签
   value: number[]
   onChange: (selected: number[]) => void
+  child1?: ReactNode
+  child2?: ReactNode
 }
 
 const TagsSection: React.FC<Props> = (props) => {
@@ -115,6 +120,10 @@ const TagsSection: React.FC<Props> = (props) => {
       <CategorySection value={category}
                        onChange={value => setCategory(value)}/>
 
+      <div>
+        {props.child1}
+      </div>
+
       <ol>
         {
           tagsByType.map(tag => {
@@ -129,14 +138,10 @@ const TagsSection: React.FC<Props> = (props) => {
             );
           })}
 
-        <Link to="/setTag">
-          <div>
-            <Icon className="icon" name="settings"/>
-          </div>
-          <span>设置</span>
-        </Link>
-
+        {props.child2}
       </ol>
+
+
     </Wrapper>
 
   );

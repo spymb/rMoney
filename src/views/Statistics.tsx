@@ -33,7 +33,7 @@ function Statistics() {
 
   const recordsByC = records.filter(r => r.category === category);
   const hash: { [K: string]: RecordItem[] } = {};
-
+// eslint-disable-next-line
   recordsByC.map(r => {
     const key = dayjs(r.createdAt).format('YYYY年MM月DD日');
     if (!(key in hash)) {

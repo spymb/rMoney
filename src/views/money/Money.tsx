@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import {TagsSection} from './tagsSection/TagsSection';
 import {NotesSection} from './NotesSection';
 import {NumberPadSection} from './numberPadSection/NumberPadSection';
+import Icon from '../../components/Icon';
+import {Link} from 'react-router-dom';
 
 const MyLayout = styled(Layout)`
   display: flex;
@@ -21,13 +23,19 @@ function Money() {
     setFormData({...formData, ...obj});
   };
   const submit = () => {
-    return
-  }
-
+    return;
+  };
+  const child2 = <Link to="/setTag">
+    <div>
+      <Icon className="icon" name="settings"/>
+    </div>
+    <span>设置</span>
+  </Link>;
   return (
     <MyLayout>
       <TagsSection value={formData.tagIDs}
-                    onChange={tagIDs => onChange({tagIDs})}/>
+                   onChange={tagIDs => onChange({tagIDs})}
+                   child2={child2}/>
 
       <NotesSection value={formData.notes}
                     onChange={notes => onChange({notes})}/>
