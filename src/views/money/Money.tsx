@@ -39,9 +39,9 @@ function Money() {
       <CategorySection value={formData.category}
                        onChange={category => onChange({category})}/>
 
-      <TagsSection value={formData.tagIDs} category={formData.category}
-                   onChange={tagIDs => onChange({tagIDs})}
-                   child2={child2}/>
+      <TagsSection IDs={formData.tagIDs} category={formData.category}
+                   onChangeIDs={tagIDs => onChange({tagIDs})}
+                   lostTag={child2}/>
 
       <NotesSection value={formData.notes}
                     onChange={notes => onChange({notes})}/>

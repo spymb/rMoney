@@ -27,7 +27,7 @@ const Topbar = styled.header`
 
 
 const SetTag: FC = () => {
-  const child2 = <Link to="/addTag">
+  const add = <Link to="/addTag">
     <div>
       <Icon className="icon" name="tianjia"/>
     </div>
@@ -49,9 +49,9 @@ const SetTag: FC = () => {
       <EditTag name="" icon=""/>
 
       <TagsSection category={category}
-                   child2={child2}
-                   value2={ID}
-                   onChange2={ID => setID(ID)}/>
+                   lostTag={add}
+                   ID={ID}
+                   onChangeID={ID => setID(ID)}/>
 
       <Center>
         <Space/>
