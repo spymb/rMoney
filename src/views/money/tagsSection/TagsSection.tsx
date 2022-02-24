@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import React, {ReactNode} from 'react';
 import {useTags} from '../../../hooks/useTags';
 import Icon from '../../../components/Icon';
+import classNames from 'classnames';
 
 const Wrapper = styled.section`
   font-size: 12px;
@@ -91,11 +92,12 @@ const Wrapper = styled.section`
 
 `;
 
-
 type Props = {
+  value2?: number
+  onChange2?: (selectedID: number) => void
   // 选中若干标签
-  value: number[]
-  onChange: (selected: number[]) => void
+  value?: number[]
+  onChange?: (selectedID: number[]) => void
   // 分类tags
   category: '-' | '+'
   // 设置或添加
@@ -106,17 +108,27 @@ const TagsSection: React.FC<Props> = (props) => {
   const {tags} = useTags();
   // 分类tags
   const tagsByType = tags.filter(tag => tag.type === props.category);
+  // 选中单个标签
+  const selectedTagID = props.value2 || 0
+  const onToggleTag2 = (tagID: number) => {
+    if (tagID !== selectedTagID) {
+      props.onChange2 && props.onChange2(tagID)
+    } else {
+      props.onChange2 && props.onChange2(0)
+    }
+  }
   // 选中若干标签
-  const selectedTagIDs = props.value;
+  const selectedTagIDs = props.value || [];
   const onToggleTag = (tagID: number) => {
     const index = selectedTagIDs.indexOf(tagID);
     if (index >= 0) {
-      props.onChange(selectedTagIDs.filter(ID => ID !== tagID));
+      props.onChange && props.onChange(selectedTagIDs.filter(ID => ID !== tagID));
     } else {
-      props.onChange([...selectedTagIDs, tagID]);
+      props.onChange && props.onChange([...selectedTagIDs, tagID]);
     }
   };
   const getClass = (tagID: number) => selectedTagIDs.indexOf(tagID) >= 0 ? 'selected' : '';
+
 
 
   return (
@@ -124,9 +136,16 @@ const TagsSection: React.FC<Props> = (props) => {
       <ol>
         {
           tagsByType.map(tag => {
+            const active = getClass(tag.id)
+            const active2 = classNames({'selected': tag.id === selectedTagID})
+            const onToggle = () => {
+              onToggleTag && onToggleTag(tag.id)
+              onToggleTag2 && onToggleTag2(tag.id)
+            }
+
             return (
-              <li key={tag.id} onClick={() => onToggleTag(tag.id)}
-                  className={getClass(tag.id)}>
+              <li key={tag.id} onClick={onToggle}
+                  className={classNames(active, active2)}>
                 <div>
                   <Icon className="icon" name={tag.icon}/>
                 </div>
@@ -140,6 +159,5 @@ const TagsSection: React.FC<Props> = (props) => {
     </Wrapper>
   );
 };
-
 
 export {TagsSection};

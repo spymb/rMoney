@@ -35,6 +35,7 @@ const SetTag: FC = () => {
   </Link>;
   const navigate = useNavigate();
   const [category, setCategory] = useState<'-' | '+'>('-');
+  const [ID, setID] = useState<number>(0);
 
   return (
     <Wrapper>
@@ -47,9 +48,11 @@ const SetTag: FC = () => {
 
       <EditTag name="" icon=""/>
 
-      <TagsSection value={[] as number []} category={category}
-                   onChange={() => {}}
-                   child2={child2}/>
+      <TagsSection category={category}
+                   child2={child2}
+                   value2={ID}
+                   onChange2={ID => setID(ID)}/>
+
       <Center>
         <Space/>
         <Button>删除标签</Button>
