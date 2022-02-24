@@ -8,13 +8,13 @@ import {Center} from '../../../components/Center';
 import {Link, useNavigate} from 'react-router-dom';
 import Icon from '../../../components/Icon';
 import {CategorySection} from '../CategorySection';
+import {useTags} from '../../../hooks/useTags';
 
 const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   overflow: hidden;
 `;
-
 const Topbar = styled.header`
   display: flex;
   justify-content: space-between;
@@ -24,7 +24,6 @@ const Topbar = styled.header`
   background: white;
   font-size: 12px;
 `;
-
 
 const SetTag: FC = () => {
   const add = <Link to="/addTag">
@@ -36,6 +35,7 @@ const SetTag: FC = () => {
   const navigate = useNavigate();
   const [category, setCategory] = useState<'-' | '+'>('-');
   const [ID, setID] = useState<number>(0);
+  const {deleteTag} = useTags()
 
   return (
     <Wrapper>
@@ -55,9 +55,10 @@ const SetTag: FC = () => {
 
       <Center>
         <Space/>
-        <Button>删除标签</Button>
+        <Button onClick={() => deleteTag(ID)}>删除标签</Button>
       </Center>
     </Wrapper>
   );
 };
+
 export {SetTag};

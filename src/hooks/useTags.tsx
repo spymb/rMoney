@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {createID} from '../lib/createID';
 import {useUpdate} from './useUpdate';
 
@@ -11,7 +11,6 @@ export type Tag = {
 
 const useTags = () => {
   const [tags, setTags] = useState<Tag[]>([]);
-
   useEffect(() => {
     let localTags = JSON.parse(window.localStorage.getItem('tags') || '[]');
     if (localTags.length === 0) {
@@ -29,10 +28,6 @@ const useTags = () => {
     }
     setTags(localTags);
   }, []);
-
-  useUpdate(() => {
-    window.localStorage.setItem('tags', JSON.stringify(tags));
-  }, [tags]);
   const findTag = (id: number) => tags.filter(tag => tag.id === id)[0];
   const findTagIndex = (id: number) => {
     let result = -1;
@@ -49,6 +44,7 @@ const useTags = () => {
   };
   const deleteTag = (id: number) => {
     setTags(tags.filter(tag => tag.id !== id));
+    window.location.reload();
   };
   const addTag = () => {
     const tagName = window.prompt('请输入新标签名');
@@ -60,6 +56,10 @@ const useTags = () => {
     const tag = findTag(id)
     return tag ? tag.name : '';
   };
+  useUpdate(() => {
+    window.localStorage.setItem('tags', JSON.stringify(tags));
+  }, [tags]);
+
 
   return {tags, setTags, findTag, findTagIndex, updateTag, deleteTag, addTag, getTagName};
 };
