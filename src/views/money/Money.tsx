@@ -6,12 +6,14 @@ import {NotesSection} from './NotesSection';
 import {NumberPadSection} from './numberPadSection/NumberPadSection';
 import Icon from '../../components/Icon';
 import {Link} from 'react-router-dom';
+import {CategorySection} from './CategorySection';
 
 const MyLayout = styled(Layout)`
   display: flex;
   flex-direction: column;
 `;
 const defaultFormData = {
+  category: '-' as ('-' | '+'),
   tagIDs: [] as number[],
   notes: '',
   amount: 0
@@ -31,9 +33,13 @@ function Money() {
     </div>
     <span>设置</span>
   </Link>;
+
   return (
     <MyLayout>
-      <TagsSection value={formData.tagIDs}
+      <CategorySection value={formData.category}
+                       onChange={category => onChange({category})}/>
+
+      <TagsSection value={formData.tagIDs} category={formData.category}
                    onChange={tagIDs => onChange({tagIDs})}
                    child2={child2}/>
 

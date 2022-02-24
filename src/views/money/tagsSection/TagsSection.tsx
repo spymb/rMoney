@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import React, {ReactNode, useState} from 'react';
+import React, {ReactNode} from 'react';
 import {useTags} from '../../../hooks/useTags';
 import Icon from '../../../components/Icon';
-import {CategorySection} from '../CategorySection';
 
 const Wrapper = styled.section`
   font-size: 12px;
@@ -13,9 +12,11 @@ const Wrapper = styled.section`
   ::-webkit-scrollbar {
     display: none;
   }
+
   > div {
     border: 1px solid red
   }
+
   > ol {
     display: flex;
     flex-wrap: wrap;
@@ -87,23 +88,25 @@ const Wrapper = styled.section`
       }
     }
   }
-  
+
 `;
 
 
 type Props = {
-  // 用于选中标签
+  // 选中若干标签
   value: number[]
   onChange: (selected: number[]) => void
-  child1?: ReactNode
+  // 分类tags
+  category: '-' | '+'
+  // 设置或添加
   child2?: ReactNode
 }
 
 const TagsSection: React.FC<Props> = (props) => {
   const {tags} = useTags();
-  const [category, setCategory] = useState<'-' | '+'>('-');
-  const tagsByType = tags.filter(tag => tag.type === category);
-
+  // 分类tags
+  const tagsByType = tags.filter(tag => tag.type === props.category);
+  // 选中若干标签
   const selectedTagIDs = props.value;
   const onToggleTag = (tagID: number) => {
     const index = selectedTagIDs.indexOf(tagID);
@@ -115,15 +118,9 @@ const TagsSection: React.FC<Props> = (props) => {
   };
   const getClass = (tagID: number) => selectedTagIDs.indexOf(tagID) >= 0 ? 'selected' : '';
 
+
   return (
     <Wrapper>
-      <CategorySection value={category}
-                       onChange={value => setCategory(value)}/>
-
-      <div>
-        {props.child1}
-      </div>
-
       <ol>
         {
           tagsByType.map(tag => {
@@ -140,11 +137,9 @@ const TagsSection: React.FC<Props> = (props) => {
 
         {props.child2}
       </ol>
-
-
     </Wrapper>
-
   );
 };
+
 
 export {TagsSection};

@@ -27,7 +27,7 @@ const AddTag: React.FC = () => {
       <Topbar>
         <Icon name="left" onClick={() => navigate(-1)}/>
         <span>自定义标签</span>
-        <Icon/>
+        <span>完成</span>
       </Topbar>
 
       <EditTag name={''} icon={''} onChange={() => {}}/>
