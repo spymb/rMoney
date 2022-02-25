@@ -30,7 +30,7 @@ const AddTag: React.FC = () => {
         <span>完成</span>
       </Topbar>
 
-      <EditTag name={''} icon={''} onChange={() => {}}/>
+      <EditTag tagID={0} tagName={''} icon={''} onChangeName={() => {}}/>
 
       <IconList name={''} onChange={() => {}}/>
     </Wrapper>

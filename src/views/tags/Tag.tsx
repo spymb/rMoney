@@ -25,7 +25,7 @@ const InputWrapper = styled.div`
 `;
 
 const Tag: React.FC = () => {
-  const {findTag, updateTag, deleteTag} = useTags();
+  const {findTag, deleteTag, updateTag} = useTags();
   let {id} = useParams();
   const tag = findTag(parseInt(id as string));
   const tagContent = (tag: { id: number, name: string }) => (

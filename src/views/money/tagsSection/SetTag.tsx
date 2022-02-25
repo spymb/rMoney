@@ -35,7 +35,18 @@ const SetTag: FC = () => {
   const navigate = useNavigate();
   const [category, setCategory] = useState<'-' | '+'>('-');
   const [ID, setID] = useState<number>(0);
-  const {deleteTag} = useTags()
+  const {deleteTag, getTagName, findTag, updateTag} = useTags()
+  const tagName = getTagName(ID)
+  const tag = findTag(ID)
+  const iconName = tag ? tag.icon : 'tag'
+  const submit = () => {
+    if (tagName === '') {
+      window.alert('标签名不能为空')
+    } else {
+      window.location.reload();
+    }
+  }
+
 
   return (
     <Wrapper>
@@ -43,10 +54,10 @@ const SetTag: FC = () => {
         <Icon name="left" onClick={() => navigate(-1)}/>
         <CategorySection value={category}
                          onChange={category => setCategory(category)}/>
-        <span>完成</span>
+        <button onClick={submit}>完成</button>
       </Topbar>
 
-      <EditTag name="" icon=""/>
+      <EditTag icon={iconName} tagID={ID} tagName={tagName} onChangeName={updateTag}/>
 
       <TagsSection category={category}
                    lostTag={add}
