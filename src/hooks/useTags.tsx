@@ -2,6 +2,7 @@
 import React, {useEffect, useState} from 'react';
 import {createID} from '../lib/createID';
 import {useUpdate} from './useUpdate';
+import {useNavigate} from 'react-router-dom';
 
 export type Tag = {
   id: number;
@@ -12,6 +13,7 @@ export type Tag = {
 
 const useTags = () => {
   const [tags, setTags] = useState<Tag[]>([]);
+  useNavigate();
   useEffect(() => {
     let localTags = JSON.parse(window.localStorage.getItem('tags') || '[]');
     if (localTags.length === 0) {
@@ -42,19 +44,24 @@ const useTags = () => {
   };
   const updateTag = (ID: number, obj: { name: string }) => {
     setTags(tags.map(tag => {
+      if (obj.name === '') {
+        window.location.reload();
+        return tag;
+      }
       const {name, ...rest} = tag;
       return tag.id === ID ? {name: obj.name, ...rest} : tag;
     }));
+    window.location.reload();
   };
   const deleteTag = (id: number) => {
     setTags(tags.filter(tag => tag.id !== id));
     window.location.reload();
   };
-  const addTag = () => {
-    const tagName = window.prompt('请输入新标签名');
-    if (tagName !== null && tagName !== '') {
-      setTags([...tags, {id: createID(), name: tagName, icon: '', type: '-'}]);
+  const addTag = (obj: { name: string }, iconName: string, type: '-' | '+') => {
+    if (obj.name !== '') {
+      setTags([...tags, {id: createID(), name: obj.name, icon: iconName, type: type}]);
     }
+    window.location.reload();
   };
   const getTagName = (id: number) => {
     const tag = findTag(id);

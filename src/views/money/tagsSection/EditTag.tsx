@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {FC} from 'react';
+import {FC, useRef} from 'react';
 import Icon from '../../../components/Icon';
 
 const Wrapper = styled.label`
@@ -31,16 +31,27 @@ const NameInput = styled.input`
 `;
 
 interface Props {
-  tagID: number;
-  tagName: string;
-  icon: string;
-  onChangeName?: (ID: number, {name}: { name: string }) => void;
+  tagID?: number;
+  tagName?: string;
+  icon?: string;
+  type?: '-' | '+' | '';
+  onChangeName?: (ID: number, obj: { name: string }) => void;
+  onTransName?: (obj: { name: string }) => void;
 }
 
 const EditTag: FC<Props> = (props) => {
-  const {tagID, tagName, icon, onChangeName} = props;
+  const {tagID, tagName, icon, onChangeName, onTransName} = props;
   const holder = () => {
     return onChangeName ? '修改标签名' : '添加标签名';
+  };
+  const refInput = useRef<HTMLInputElement>(null);
+  const blurer = () => {
+    if (refInput.current !== null) {
+      if (onChangeName && tagID) {
+        onChangeName(tagID, {name: refInput.current.value});
+      }
+      onTransName && onTransName({name: refInput.current.value});
+    }
   };
 
   return (
@@ -49,10 +60,9 @@ const EditTag: FC<Props> = (props) => {
         <Icon className="icon" name={icon}/>
       </IconWrapper>
 
-      <NameInput type="text" value={tagName} onChange={
-        (e) => {
-          onChangeName && onChangeName(tagID, {name: e.target.value});
-        }}
+      <NameInput type="text" defaultValue={tagName}
+                 ref={refInput}
+                 onBlur={blurer}
                  placeholder={holder()}/>
     </Wrapper>
   );

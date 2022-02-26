@@ -9,11 +9,7 @@ const TagsWrapper = styled.section`
   ::-webkit-scrollbar {
     display: none;
   }
-
-  > div {
-    border: 1px solid red
-  }
-
+  
   > ol {
     display: flex;
     flex-wrap: wrap;
@@ -88,4 +84,4 @@ const TagsWrapper = styled.section`
 
 `;
 
-export {TagsWrapper}
+export {TagsWrapper};

@@ -27,7 +27,7 @@ function App() {
           <Route path="/tags/:id" element={<Tag/>}/>
           <Route path="/money" element={<Money/>}/>
           <Route path="/setTag" element={<SetTag/>}/>
-          <Route path="/addTag" element={<AddTag/>}/>
+          <Route path="/addTag/:id" element={<AddTag/>}/>
           <Route path="/statistics" element={<Statistics/>}/>
           <Route path="/" element={<Navigate replace to="/money"/>}/>
           <Route path="*" element={<NoMatch/>}/>

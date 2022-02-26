@@ -26,26 +26,19 @@ const Topbar = styled.header`
 `;
 
 const SetTag: FC = () => {
-  const add = <Link to="/addTag">
+  const navigate = useNavigate();
+  const [category, setCategory] = useState<'-' | '+'>('-');
+  const [ID, setID] = useState<number>(0);
+  const {deleteTag, getTagName, findTag, updateTag} = useTags();
+  const tagName = getTagName(ID);
+  const tag = findTag(ID);
+  const iconName = tag ? tag.icon : 'tag';
+  const add = <Link to={'/addTag/' + category}>
     <div>
       <Icon className="icon" name="tianjia"/>
     </div>
     <span>添加</span>
   </Link>;
-  const navigate = useNavigate();
-  const [category, setCategory] = useState<'-' | '+'>('-');
-  const [ID, setID] = useState<number>(0);
-  const {deleteTag, getTagName, findTag, updateTag} = useTags()
-  const tagName = getTagName(ID)
-  const tag = findTag(ID)
-  const iconName = tag ? tag.icon : 'tag'
-  const submit = () => {
-    if (tagName === '') {
-      window.alert('标签名不能为空')
-    } else {
-      window.location.reload();
-    }
-  }
 
 
   return (
@@ -54,7 +47,7 @@ const SetTag: FC = () => {
         <Icon name="left" onClick={() => navigate(-1)}/>
         <CategorySection value={category}
                          onChange={category => setCategory(category)}/>
-        <button onClick={submit}>完成</button>
+        <Icon/>
       </Topbar>
 
       <EditTag icon={iconName} tagID={ID} tagName={tagName} onChangeName={updateTag}/>
@@ -62,7 +55,7 @@ const SetTag: FC = () => {
       <TagsSection category={category}
                    lostTag={add}
                    ID={ID}
-                   onChangeID={ID => setID(ID)}/>
+                   onChangeID={setID}/>
 
       <Center>
         <Space/>

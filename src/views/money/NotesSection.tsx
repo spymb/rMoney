@@ -15,6 +15,7 @@ type Props = {
 
 const NotesSection: React.FC<Props> = (props) => {
   const notes = props.value;
+  console.log(notes);
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     props.onChange(e.target.value);
   };

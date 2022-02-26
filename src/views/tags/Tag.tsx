@@ -27,6 +27,7 @@ const InputWrapper = styled.div`
 const Tag: React.FC = () => {
   const {findTag, deleteTag, updateTag} = useTags();
   let {id} = useParams();
+  console.log(id);
   const tag = findTag(parseInt(id as string));
   const tagContent = (tag: { id: number, name: string }) => (
     <div>
@@ -44,6 +45,7 @@ const Tag: React.FC = () => {
         <Space/>
         <Space/>
         <Button onClick={() => {
+          console.log(id);
           deleteTag(tag.id);
         }}>删除标签</Button>
       </Center>
