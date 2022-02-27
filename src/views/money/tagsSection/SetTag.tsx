@@ -1,38 +1,24 @@
 import React, {FC, useState} from 'react';
-import styled from 'styled-components';
 import {TagsSection} from './TagsSection';
 import {EditTag} from './EditTag';
 import {Button} from '../../../components/Button';
 import {Space} from '../../../components/Space';
 import {Center} from '../../../components/Center';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import Icon from '../../../components/Icon';
-import {CategorySection} from '../CategorySection';
 import {useTags} from '../../../hooks/useTags';
-
-const Wrapper = styled.section`
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-`;
-const Topbar = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  line-height: 10px;
-  padding: 4px;
-  background: white;
-  font-size: 12px;
-`;
+import {Topbar, Wrapper} from './SetAddWrapper';
 
 const SetTag: FC = () => {
   const navigate = useNavigate();
-  const [category, setCategory] = useState<'-' | '+'>('-');
+  const [category] = useState<'-' | '+'>('-');
   const [ID, setID] = useState<number>(0);
   const {deleteTag, getTagName, findTag, updateTag} = useTags();
   const tagName = getTagName(ID);
   const tag = findTag(ID);
   const iconName = tag ? tag.icon : 'tag';
+  let {id} = useParams();
+  let pathID = id as '-' | '+';
   const add = <Link to={'/addTag/' + category}>
     <div>
       <Icon className="icon" name="tianjia"/>
@@ -45,8 +31,7 @@ const SetTag: FC = () => {
     <Wrapper>
       <Topbar>
         <Icon name="left" onClick={() => navigate(-1)}/>
-        <CategorySection value={category}
-                         onChange={category => setCategory(category)}/>
+        <span>管理{pathID === '-' ? '支出' : '收入'}标签</span>
         <Icon/>
       </Topbar>
 

@@ -27,7 +27,7 @@ function Money() {
   const submit = () => {
     return;
   };
-  const child2 = <Link to="/setTag">
+  const child2 = <Link to={'/setTag/' + formData.category}>
     <div>
       <Icon className="icon" name="settings"/>
     </div>

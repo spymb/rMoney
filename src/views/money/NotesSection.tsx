@@ -6,6 +6,7 @@ const Wrapper = styled.section`
   background: #f5f5f5;
   padding: 14px 16px;
   font-size: 14px;
+  border-top: 1px solid #c4c4c4;
 `;
 
 type Props = {
@@ -15,7 +16,6 @@ type Props = {
 
 const NotesSection: React.FC<Props> = (props) => {
   const notes = props.value;
-  console.log(notes);
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     props.onChange(e.target.value);
   };

@@ -4,8 +4,7 @@ const TagsWrapper = styled.section`
   font-size: 12px;
   flex: 5;
   overflow: auto;
-  border-bottom: 1px solid #333333;
-
+  
   ::-webkit-scrollbar {
     display: none;
   }
@@ -14,6 +13,9 @@ const TagsWrapper = styled.section`
     display: flex;
     flex-wrap: wrap;
     padding: 4px 0;
+    ::-webkit-scrollbar {
+      display: none;
+    }
 
     > li {
       width: 20%;
@@ -32,8 +34,8 @@ const TagsWrapper = styled.section`
         align-items: center;
 
         .icon {
-          width: 26px;
-          height: 26px;
+          width: 32px;
+          height: 32px;
         }
       }
 
@@ -71,8 +73,8 @@ const TagsWrapper = styled.section`
         align-items: center;
 
         .icon {
-          width: 26px;
-          height: 26px;
+          width: 32px;
+          height: 32px;
         }
       }
 

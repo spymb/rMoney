@@ -4,7 +4,7 @@ import Icon from '../../../components/Icon';
 
 const Wrapper = styled.label`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   padding: 24px 20px;
 `;
@@ -15,9 +15,8 @@ const IconWrapper = styled.span`
   width: 50px;
   height: 50px;
   border-radius: 10px;
-
   > .icon {
-    font-size: 32px;
+    font-size: 48px;
   }
 `;
 const NameInput = styled.input`
@@ -28,6 +27,7 @@ const NameInput = styled.input`
   text-align: right;
   line-height: 24px;
   font-size: 20px;
+  background: #f5f5f5;
 `;
 
 interface Props {

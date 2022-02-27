@@ -7,21 +7,35 @@ const Wrapper = styled.ul`
   display: flex;
   flex-wrap: wrap;
   padding: 0 10px;
+
   > li {
     width: 20%;
-    &.selected {
-      background-color: red;
+    > div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      margin: 10px 10px;
+
+      > .icon {
+        width: 32px;
+        height: 32px;
+    }
   }
+
+    &.selected {
+      > div {
+        background: #E8F1FF;
+
+        .icon {
+          fill: #005DFF;
+        }
+      }
+    }
 `;
-const IconWrapper = styled.span`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 50px;
-  border-radius: 10px;
-  margin: 10px 10px;
-`;
+
 const IconNames = ['canyin', 'custom', 'dushu', 'fushi', 'gongzi', 'jianzhi', 'jiaotong', 'licai', 'lvxing', 'riyongpin', 'shejiao', 'yundong', 'hongbao', 'jiangjin', 'huazhuang', 'shuma', 'yule'];
 
 interface Props {
@@ -49,9 +63,9 @@ const IconList: React.FC<Props> = (props) => {
         return (
           <li key={iconName} onClick={() => {onToggleIcon(iconName);}}
               className={selected}>
-            <IconWrapper>
+            <div>
               <Icon className="icon" name={iconName}/>
-            </IconWrapper>
+            </div>
           </li>
         );
       })}
