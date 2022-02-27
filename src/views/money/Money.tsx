@@ -7,6 +7,7 @@ import {NumberPadSection} from './numberPadSection/NumberPadSection';
 import Icon from '../../components/Icon';
 import {Link} from 'react-router-dom';
 import {CategorySection} from './CategorySection';
+import {useRecords} from '../../hooks/useRecords';
 
 const MyLayout = styled(Layout)`
   display: flex;
@@ -21,11 +22,14 @@ const defaultFormData = {
 
 function Money() {
   const [formData, setFormData] = useState(defaultFormData);
+  const {addRecord} = useRecords();
   const onChange = (obj: Partial<typeof formData>) => {
     setFormData({...formData, ...obj});
   };
   const submit = () => {
-    return;
+    if (addRecord(formData)) {
+      setFormData(defaultFormData);
+    }
   };
   const child2 = <Link to={'/setTag/' + formData.category}>
     <div>
