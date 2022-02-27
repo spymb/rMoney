@@ -28,10 +28,10 @@ const NavWrapper = styled.nav`
         }
 
         &.active {
-          color: red;
+          color: #005DFF;
 
           .icon {
-            fill: red;
+            fill: #005DFF;
           }
         }
       }
@@ -44,21 +44,21 @@ const Nav = () => {
     <NavWrapper>
       <ul>
         <li>
-          <NavLink to="/tags">
-            <Icon name="tag"/>
-            标签页
+          <NavLink to="/details">
+            <Icon name="details"/>
+            明细
           </NavLink>
         </li>
         <li>
           <NavLink to="/money">
             <Icon name="money"/>
-            记账页
+            记账
           </NavLink>
         </li>
         <li>
-          <NavLink to="/statistics">
+          <NavLink to="/chart">
             <Icon name="chart"/>
-            统计页
+            图表
           </NavLink>
         </li>
       </ul>

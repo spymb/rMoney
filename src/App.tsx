@@ -5,14 +5,13 @@ import {
   Route,
   Navigate
 } from 'react-router-dom';
-import Tags from './views/tags/Tags';
 import Money from './views/money/Money';
-import Statistics from './views/Statistics';
 import NoMatch from './views/NoMatch';
 import styled from 'styled-components';
-import {Tag} from './views/tags/Tag';
 import {SetTag} from './views/money/tagsSection/SetTag';
 import {AddTag} from './views/money/tagsSection/AddTag';
+import {Details} from './views/Details';
+import {Chart} from './views/Chart';
 
 const AppWrapper = styled.div`
   color: #333;
@@ -23,12 +22,11 @@ function App() {
     <AppWrapper>
       <Router>
         <Routes>
-          <Route path="/tags" element={<Tags/>}/>
-          <Route path="/tags/:id" element={<Tag/>}/>
           <Route path="/money" element={<Money/>}/>
           <Route path="/setTag/:id" element={<SetTag/>}/>
           <Route path="/addTag/:id" element={<AddTag/>}/>
-          <Route path="/statistics" element={<Statistics/>}/>
+          <Route path="/details" element={<Details/>}/>
+          <Route path="/chart" element={<Chart/>}/>
           <Route path="/" element={<Navigate replace to="/money"/>}/>
           <Route path="*" element={<NoMatch/>}/>
         </Routes>
