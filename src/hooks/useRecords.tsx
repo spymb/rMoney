@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import {useUpdate} from './useUpdate';
+import dayjs from 'dayjs';
 
 export type RecordItem = {
   tagIDs: number[]
@@ -32,6 +33,9 @@ export const useRecords = () => {
     setRecords([...records, record]);
     return true;
   };
-
-  return {records, addRecord};
+  const getRecordsByTime = (time: Date, unit: dayjs.UnitType) => {
+    records.filter(record => {dayjs(time).isSame(record.createdAt, unit);})
+    return records
+  }
+  return {records, addRecord, getRecordsByTime};
 };

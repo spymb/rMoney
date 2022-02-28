@@ -46,7 +46,7 @@ const Nav = () => {
         <li>
           <NavLink to="/details">
             <Icon name="details"/>
-            明细
+            流水
           </NavLink>
         </li>
         <li>
@@ -58,7 +58,7 @@ const Nav = () => {
         <li>
           <NavLink to="/chart">
             <Icon name="chart"/>
-            图表
+            统计
           </NavLink>
         </li>
       </ul>
