@@ -1,13 +1,13 @@
 import React, {FC, lazy, Suspense} from 'react';
 import {EChartOption} from 'echarts';
-import {useRecords} from '../hooks/useRecords';
+import {useRecords} from '../../hooks/useRecords';
 import dayjs from 'dayjs';
 
-const Echarts = lazy(() => import('../components/ECharts'));
+const Echarts = lazy(() => import('../../components/ECharts'));
 
 interface Props {
   day: Date
-  dateType: string
+  dateType: 'month' | 'year'
   moneyType: '-' | '+'
 }
 

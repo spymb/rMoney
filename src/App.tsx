@@ -11,7 +11,7 @@ import styled from 'styled-components';
 import {SetTag} from './views/money/tagsSection/SetTag';
 import {AddTag} from './views/money/tagsSection/AddTag';
 import {Details} from './views/Details';
-import {Statistics} from './views/Statistics';
+import {Statistics} from './views/statistics/Statistics';
 
 const AppWrapper = styled.div`
   color: #333;
