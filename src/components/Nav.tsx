@@ -56,7 +56,7 @@ const Nav = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/chart">
+          <NavLink to="/statistics">
             <Icon name="chart"/>
             统计
           </NavLink>

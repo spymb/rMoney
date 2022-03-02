@@ -1,15 +1,18 @@
-import React, {FC, lazy, Suspense, useState} from 'react';
-import Layout from '../components/Layout';
+import React, {FC, lazy, Suspense} from 'react';
 import {EChartOption} from 'echarts';
 import {useRecords} from '../hooks/useRecords';
 import dayjs from 'dayjs';
 
 const Echarts = lazy(() => import('../components/ECharts'));
 
-const Chart: FC = () => {
-  const [dateType, setDateType] = useState<string>('year');
-  const [moneyType, setMoneyType] = useState<'-' | '+'>('-');
-  const [day, setDay] = useState(new Date());
+interface Props {
+  day: Date
+  dateType: string
+  moneyType: '-' | '+'
+}
+
+const Chart: FC<Props> = (props) => {
+  const {day, dateType, moneyType} = props
   const {getRecordsByTime} = useRecords();
 
   const daysArray = Array(dayjs(day).daysInMonth()).fill(0).map((_, index) => index + 1);
@@ -41,7 +44,6 @@ const Chart: FC = () => {
 
   const xData = dateType === 'month' ? daysArray : monthsArray
   const yData = dateType === 'month' ? getSumForDay_Month(day) : getSumForMonth_Year(day)
-
 
   const option: EChartOption = {
     tooltip: {
@@ -110,11 +112,9 @@ const Chart: FC = () => {
   };
 
   return (
-    <Layout>
       <Suspense fallback={'加载中'}>
         <Echarts option={option} style={{ height: "200px" }}/>
       </Suspense>
-    </Layout>
   );
 };
 

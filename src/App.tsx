@@ -11,7 +11,7 @@ import styled from 'styled-components';
 import {SetTag} from './views/money/tagsSection/SetTag';
 import {AddTag} from './views/money/tagsSection/AddTag';
 import {Details} from './views/Details';
-import {Chart} from './views/Chart';
+import {Statistics} from './views/Statistics';
 
 const AppWrapper = styled.div`
   color: #333;
@@ -26,7 +26,7 @@ function App() {
           <Route path="/setTag/:id" element={<SetTag/>}/>
           <Route path="/addTag/:id" element={<AddTag/>}/>
           <Route path="/details" element={<Details/>}/>
-          <Route path="/chart" element={<Chart/>}/>
+          <Route path="/statistics" element={<Statistics/>}/>
           <Route path="/" element={<Navigate replace to="/money"/>}/>
           <Route path="*" element={<NoMatch/>}/>
         </Routes>
