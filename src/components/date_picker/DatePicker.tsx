@@ -1,16 +1,18 @@
-import styled from 'styled-components';
-import {FC, useState} from 'react';
-import dayjs from 'dayjs';
-import PickerList from './PickerList';
+import React, {CSSProperties, FC, useEffect, useState} from "react";
+import PickerList from "./PickerList";
+import styled from "styled-components";
+import dayjs from "dayjs";
 
 const Wrapper = styled.div`
   background-color: #fff
-`;
+`
 const Header = styled.div`
   padding: 6px;
   font-size: 20px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px #e0e0e0;
 
   > button {
     font-size: 16px;
@@ -26,7 +28,7 @@ const Header = styled.div`
   .ok-btn {
     color: #42a5f5;
   }
-`;
+`
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
@@ -35,9 +37,9 @@ const Container = styled.div`
   > * {
     flex: 1;
   }
-`;
+`
 
-type DatePickerType = 'year' | 'full-date' | 'year-month' | 'month-date'
+export type DatePickerType = 'year' | 'month' | 'date'
 
 interface DatePickerProps {
   date: Date,
@@ -45,59 +47,70 @@ interface DatePickerProps {
   onChange?: (date: Date) => void
   onOk?: (date: Date) => void
   onCancel?: (date: Date) => void
+  className?: string
+  style?: CSSProperties
 }
 
 const DatePicker: FC<DatePickerProps> = (props) => {
-  const {date: pDate, pickerType, onOk, onChange, onCancel} = props;
-  const [year, setYear] = useState(dayjs(pDate).year());
-  const [month, setMonth] = useState(dayjs(pDate).month() + 1);
-  const [date, setDate] = useState(dayjs(pDate).date());
+  const {date: pDate, pickerType, onOk, onChange, onCancel, ...restProps} = props
+  const [year, setYear] = useState(dayjs(pDate).year())
+  const [month, setMonth] = useState(dayjs(pDate).month() + 1)
+  const [date, setDate] = useState(dayjs(pDate).date())
+
+  useEffect(() => {
+    const bodyTouchMoveHandler = (e: TouchEvent) => {
+      e.preventDefault()
+    }
+    document.body.addEventListener('touchmove', bodyTouchMoveHandler, {passive: false})
+    return () => {
+      document.body.removeEventListener('touchmove', bodyTouchMoveHandler)
+    }
+  }, [])
   const onYearChange = (val: string) => {
-    setYear(parseInt(val));
-  };
+    setYear(parseInt(val))
+  }
   const onMonthChange = (val: string) => {
-    setMonth(parseInt(val));
-  };
+    setMonth(parseInt(val))
+  }
   const onDateChange = (val: string) => {
-    setDate(parseInt(val));
-  };
-  const yearList = [];
-
+    setDate(parseInt(val))
+  }
+  const yearList = []
   for (let i = 0; i < 20; i++) {
-    yearList.unshift(year - i + '');
+    yearList.unshift(dayjs().year() - i + '')
+  }
+  const showYear = pickerType === 'date' || pickerType === 'month' || pickerType === 'year'
+  const showMonth = pickerType === 'date' || pickerType === 'month'
+  const showDate = pickerType === 'date'
+
+  let dateStr = ''
+  if (pickerType === 'date') {
+    dateStr = `${year}-${month}-${date}`
+  }
+  if (pickerType === 'month') {
+    dateStr = `${year}-${month}`
+  }
+  if (pickerType === 'year') {
+    dateStr = `${year}`
   }
 
-  const showYear = pickerType === 'full-date' || pickerType === 'year-month' || pickerType === 'year';
-  const showMonth = pickerType === 'full-date' || pickerType === 'year-month' || pickerType === 'month-date';
-  const showDate = pickerType === 'full-date' || pickerType === 'month-date';
+  const daysInMonth =  dayjs().year(year).month(month - 1).daysInMonth()
 
-  let dateStr = '';
-  if (pickerType === 'full-date') {
-    dateStr = `${year}-${month}-${date}`;
-  }
-  if (pickerType === 'month-date') {
-    dateStr = `${month}-${date}`;
-  }
-  if (pickerType === 'year-month') {
-    dateStr = `${year}-${month}`;
-  }
+  const monthList = Array(12).fill(0).map((item, index) => index + 1 + '')
 
-  const daysInMonth = dayjs().year(year).month(month - 1).daysInMonth();
-  const monthList = Array(12).fill(0).map((item, index) => index + 1 + '');
-  const dateList = Array(daysInMonth).fill(0).map((item, index) => index + 1 + '');
+  const dateList =  Array(daysInMonth).fill(0).map((item, index) => index + 1 + '')
 
   const onClickOk = () => {
-    const fullDate = new Date(dayjs().year(year).month(month - 1).date(date).valueOf());
-    onChange && onChange(fullDate);
-    onOk && onOk(fullDate);
-  };
+    const fullDate = new Date(dayjs().year(year).month(month - 1).date(date).valueOf())
+    onChange && onChange(fullDate)
+    onOk && onOk(fullDate)
+  }
   const onClickCancel = () => {
-    const fullDate = new Date(dayjs().year(year).month(month - 1).date(date).valueOf());
-    onCancel && onCancel(fullDate);
-  };
-
+    const fullDate = new Date(dayjs().year(year).month(month - 1).date(date).valueOf())
+    onCancel && onCancel(fullDate)
+  }
   return (
-    <Wrapper>
+    <Wrapper {...restProps}>
       <Header>
         <button className="cancel-btn" onClick={onClickCancel}>取消</button>
         <header className="title">{dateStr}</header>
@@ -109,7 +122,7 @@ const DatePicker: FC<DatePickerProps> = (props) => {
         {showDate && <PickerList onChange={onDateChange} value={date + ''} listData={dateList}/>}
       </Container>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default DatePicker;
+export default DatePicker
