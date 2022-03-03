@@ -22,7 +22,7 @@ export const useRecords = () => {
   const addRecord = (newRecord: newRecordItem) => {
     if (newRecord.tagIDs.length === 0) {
       alert('请选择标签');
-      newRecord.amount = 0
+      newRecord.amount = 0;
       return false;
     }
     if (newRecord.amount <= 0) {
@@ -34,8 +34,36 @@ export const useRecords = () => {
     return true;
   };
   const getRecordsByTime = (time: Date, unit: dayjs.UnitType) => {
-    records.filter(record => {dayjs(time).isSame(record.createdAt, unit);})
-    return records
+    return records.filter(record => {
+      return dayjs(time).isSame(record.createdAt, unit)
+    })
+  };
+  const getDaySum = (records: RecordItem[], category: '-' | '+', time: string) => {
+    const recordsByCategory = records.map(record => {
+      if (record.category === category) {
+        return record;
+      }
+    });
+    const recordsFormatTime = recordsByCategory.map(r => {
+      if (r === undefined) {return; }
+      r['createdAt'] = dayjs(r.createdAt).format('YYYY-MM-DD');
+      return r;
+    });
+
+    const holder = {};
+    recordsFormatTime.map(r => {
+      if (r === undefined) {return; }
+      if (holder.hasOwnProperty(r.createdAt)) {
+        // @ts-ignore
+        holder[r.createdAt] = holder[r.createdAt] + r.amount;
+      } else {
+        // @ts-ignore
+        holder[r.createdAt] = r.amount;
+      }
+    });
+
+    // @ts-ignore
+    return holder[dayjs(time).format('YYYY-MM-DD')]
   }
-  return {records, addRecord, getRecordsByTime};
+  return {records, addRecord, getRecordsByTime, getDaySum};
 };

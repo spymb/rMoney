@@ -6,17 +6,17 @@ import dayjs from 'dayjs';
 const Echarts = lazy(() => import('../../components/ECharts'));
 
 interface Props {
-  day: Date
-  dateType: 'month' | 'year'
-  moneyType: '-' | '+'
+  day: Date;
+  dateType: 'month' | 'year';
+  moneyType: '-' | '+';
 }
 
 const Chart: FC<Props> = (props) => {
-  const {day, dateType, moneyType} = props
+  const {day, dateType, moneyType} = props;
   const {getRecordsByTime} = useRecords();
 
   const daysArray = Array(dayjs(day).daysInMonth()).fill(0).map((_, index) => index + 1);
-  const monthsArray = Array(12).fill(0).map((_, index) => index + 1)
+  const monthsArray = Array(12).fill(0).map((_, index) => index + 1);
 // 某月每天收入支出统计
   const getSumForDay_Month = (date: Date) => {
     const recordsByMonth = getRecordsByTime(date, 'month');
@@ -31,19 +31,22 @@ const Chart: FC<Props> = (props) => {
   };
 // 某年每月收入支出统计
   const getSumForMonth_Year = (date: Date) => {
-    const recordsByYear = getRecordsByTime(date, 'year')
+    const recordsByYear = getRecordsByTime(date, 'year');
     const ret = {
       '-': monthsArray.map(_ => 0),
       '+': monthsArray.map(_ => 0)
-    }
+    };
     return recordsByYear.reduce((acc, record) => {
-      acc[record.category][dayjs(record.createdAt).month()] += record.amount
-      return acc
-    }, ret)
-  }
+      acc[record.category][dayjs(record.createdAt).month()] += record.amount;
+      return acc;
+    }, ret);
+  };
 
-  const xData = dateType === 'month' ? daysArray : monthsArray
-  const yData = dateType === 'month' ? getSumForDay_Month(day) : getSumForMonth_Year(day)
+  const xData = dateType === 'month' ? daysArray : monthsArray;
+  const yData = dateType === 'month' ? getSumForDay_Month(day) : getSumForMonth_Year(day);
+  const recordsByMonth = getRecordsByTime(day, 'month');
+  console.log(recordsByMonth);
+
 
   const option: EChartOption = {
     tooltip: {
@@ -112,9 +115,9 @@ const Chart: FC<Props> = (props) => {
   };
 
   return (
-      <Suspense fallback={'加载中'}>
-        <Echarts option={option} style={{ height: "200px" }}/>
-      </Suspense>
+    <Suspense fallback={'加载中'}>
+      <Echarts option={option} style={{height: '200px'}}/>
+    </Suspense>
   );
 };
 

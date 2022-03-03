@@ -18,6 +18,7 @@ const Statistics: React.FunctionComponent<Props> = () => {
 
   const handleOk = (d: Date) => {
     setDay(d)
+    console.log(day);
     setShowDatePicker(false)
   }
   const handleCancel = () => {
