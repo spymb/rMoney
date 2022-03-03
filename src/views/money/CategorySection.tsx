@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 import React, {useState} from 'react';
+import {mainColor} from '../../color';
 
 const Wrapper = styled.section`
   font-size: 24px;
-
+  
   > ul {
+    box-shadow: inset 0 -5px 5px -5px rgba(0, 0, 0, 0.25),
+    inset 0 5px 5px -5px rgba(0, 0, 0, 0.25);
     display: flex;
-    background: #c4c4c4;
+    background: white;
 
     > li {
       width: 50%;
@@ -14,19 +17,13 @@ const Wrapper = styled.section`
       padding: 16px 0;
       position: relative;
 
-      &.selected::after {
-        content: '';
-        display: block;
-        height: 3px;
-        background: #333;
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        left: 0;
+      &.selected {
+        background: ${mainColor};
+        color: white;
       }
     }
   }
-`;
+`
 
 type Props = {
   value: '-' | '+'

@@ -2,17 +2,17 @@ import React, {FC, lazy, Suspense} from 'react';
 import {EChartOption} from 'echarts';
 import {useRecords} from '../../hooks/useRecords';
 import dayjs from 'dayjs';
+import {mainColor} from '../../color';
 
 const Echarts = lazy(() => import('../../components/ECharts'));
 
 interface Props {
   day: Date;
   dateType: 'month' | 'year';
-  moneyType: '-' | '+';
 }
 
 const Chart: FC<Props> = (props) => {
-  const {day, dateType, moneyType} = props;
+  const {day, dateType} = props;
   const {getRecordsByTime} = useRecords();
 
   const daysArray = Array(dayjs(day).daysInMonth()).fill(0).map((_, index) => index + 1);
@@ -68,14 +68,13 @@ const Chart: FC<Props> = (props) => {
       left: 10,
       right: 10
     },
-    color: ['#005DFF'],
-    title: {
-      text: `${dateType === 'year' ? '年' : '月'}度趋势图`,
-      top: 10,
-      left: 6,
+    color: [mainColor],
+    legend: {
+      selectedMode: 'single',
+      right: 10,
+      icon: 'roundRect',
       textStyle: {
-        fontSize: 14,
-        fontWeight: 'normal'
+        fontSize: 12,
       }
     },
     xAxis: {
@@ -89,7 +88,7 @@ const Chart: FC<Props> = (props) => {
       type: 'value',
       show: false
     },
-    series: [moneyType === '-' ? {
+    series: [{
       name: '支出',
       seriesLayoutBy: 'row',
       type: 'line',
@@ -100,7 +99,7 @@ const Chart: FC<Props> = (props) => {
         width: 1,
       },
       data: yData['-']
-    } : {
+    }, {
       name: '收入',
       seriesLayoutBy: 'row',
       type: 'line',

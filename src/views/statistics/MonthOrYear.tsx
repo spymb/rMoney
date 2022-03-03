@@ -1,35 +1,31 @@
 import styled from 'styled-components';
 import React, {useState} from 'react';
+import {mainColor} from '../../color';
 
 const Wrapper = styled.section`
-  font-size: 16px;
-  padding: 0 150px;
-  margin: 30px;
+  font-size: 24px;
 
   > ul {
+    box-shadow: inset 0 -5px 5px -5px rgba(0, 0, 0, 0.25),
+    inset 0 5px 5px -5px rgba(0, 0, 0, 0.25);
     display: flex;
-    background: #c4c4c4;
-    justify-content: center;
+    background: white;
 
     > li {
       width: 50%;
       text-align: center;
-      padding: 8px 0;
+      padding: 16px 0;
       position: relative;
 
-      &.selected::after {
-        content: '';
-        display: block;
-        height: 3px;
-        background: #333;
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        left: 0;
+      &.selected {
+        background: ${mainColor};
+        color: white;
       }
     }
   }
-`;
+  `
+
+
 
 type Props = {
   value: 'month' | 'year'
