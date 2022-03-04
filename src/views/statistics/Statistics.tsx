@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
 import styled from 'styled-components';
 import {mainColor} from '../../color';
 import {RankList} from './RankList';
+import {Category} from '../../components/Category';
 
 const TimeSelector = styled.div`
   box-shadow: inset 0 -5px 5px -5px rgba(0, 0, 0, 0.25);
@@ -16,7 +17,29 @@ const TimeSelector = styled.div`
   text-align: center;
   color: ${mainColor};
 `;
+const CategoryWrapper = styled.div`
+  font-size: 14px;
+  padding: 0 160px;
+  margin: 10px 0;
 
+  > ul {
+    justify-content: space-evenly;
+    display: flex;
+
+    > li {
+      border: 1px solid #cccccc;
+      border-radius: 5px;
+      width: 30%;
+      text-align: center;
+      padding: 4px 0;
+
+      &.selected {
+        background: ${mainColor};
+        color: white;
+      }
+    }
+  }
+`;
 
 const Statistics: React.FunctionComponent = () => {
   const [dateType, setDateType] = useState<'month' | 'year'>('month');
@@ -24,7 +47,6 @@ const Statistics: React.FunctionComponent = () => {
   const [category, setCategory] = useState<'-' | '+'>('-');
   const [showDatePicker, setShowDatePicker] = useState(false);
   const dateStr = dayjs(day).format(dateType === 'year' ? 'YYYY年' : 'YYYY年M月');
-
 
   const handleOk = (d: Date) => {
     setDay(d);
@@ -37,17 +59,20 @@ const Statistics: React.FunctionComponent = () => {
     setShowDatePicker(true);
   };
 
-
-
   return (
     <Layout>
       <MonthOrYear value={dateType} onChange={setDateType}/>
 
       <TimeSelector onClick={handleDateClick}>
-        {dateStr}趋势图&#9660;
+        {dateStr}&#9660;
       </TimeSelector>
 
+      <CategoryWrapper>
+        <Category value={category} onChange={setCategory}/>
+      </CategoryWrapper>
+
       <Chart day={day} dateType={dateType}/>
+
 
       <RankList day={day} dateType={dateType} category={category}/>
 

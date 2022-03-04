@@ -66,12 +66,12 @@ const Chart: FC<Props> = (props) => {
       right: 10
     },
     color: [mainColor],
-    legend: {
-      selectedMode: 'single',
-      right: 10,
-      icon: 'roundRect',
+    title: {
+      text: `${dateType === 'year' ? '年' : '月'}度趋势图`,
+      left: 'center',
       textStyle: {
-        fontSize: 12,
+        fontSize: 14,
+        fontWeight: 'normal'
       }
     },
     xAxis: {

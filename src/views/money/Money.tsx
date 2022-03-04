@@ -6,8 +6,9 @@ import {NotesSection} from './NotesSection';
 import {NumberPadSection} from './numberPadSection/NumberPadSection';
 import Icon from '../../components/Icon';
 import {Link} from 'react-router-dom';
-import {CategorySection} from './CategorySection';
+import {Category} from '../../components/Category';
 import {useRecords} from '../../hooks/useRecords';
+import {CategoryWrapper} from '../../components/InAndOut';
 
 const MyLayout = styled(Layout)`
   display: flex;
@@ -40,8 +41,10 @@ function Money() {
 
   return (
     <MyLayout>
-      <CategorySection value={formData.category}
-                       onChange={category => onChange({category})}/>
+      <CategoryWrapper>
+        <Category value={formData.category}
+                  onChange={category => onChange({category})}/>
+      </CategoryWrapper>
 
       <TagsSection ID={formData.tagID} category={formData.category}
                    onChangeID={tagID => onChange({tagID})}

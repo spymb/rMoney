@@ -6,15 +6,21 @@ import {RecordItem, useRecords} from '../../hooks/useRecords';
 import {useTags} from '../../hooks/useTags';
 
 const Wrapper = styled.ol`
-  border-top: 1px solid #eeeeee;
-  padding: 10px;
+  box-shadow: inset 0 5px 5px -5px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+
+  > div {
+    justify-content: center;
+    display: flex;
+    padding: 10px 20px;
+  }
 
   > li {
     display: flex;
     align-items: center;
-    margin: 10px 0;
-    padding: 10px 0;
-    border-bottom: 1px solid #eeeeee;
+    padding: 10px 15px;
+    background: white;
+    border-bottom: 1px solid #c4c4c4;
 
     .icon-wrapper {
       width: 40px;
@@ -57,6 +63,11 @@ const Wrapper = styled.ol`
       }
     }
   }
+`;
+const FallBackMessage = styled.div`
+  font-size: 20px;
+  line-height: 160px;
+  text-align: center;
 `;
 
 interface Props {
@@ -101,26 +112,27 @@ const RankList: React.FunctionComponent<Props> = (props) => {
         {category === '-' ? '支出' : '收入'}排行
       </div>
 
-      {tagRankData.map(item => {
-        return (
-          <li className="rank-list-item" key={item.tag.id}>
-            <div className="icon-wrapper">
-              <Icon className="icon" size="24px" name={item.tag.icon}/>
-            </div>
+      {tagRankData.length === 0 ? <FallBackMessage>暂无数据</FallBackMessage> :
+        tagRankData.map(item => {
+          return (
+            <li className="rank-list-item" key={item.tag.id}>
+              <div className="icon-wrapper">
+                <Icon className="icon" size="24px" name={item.tag.icon}/>
+              </div>
 
-            <div className="info">
+              <div className="info">
                       <span className="text-info">
                         <span className="icon-name">{item.tag.name}</span>
                         <span className="percent">{item.percent.toFixed(2)}%</span>
                         <span className="amount">￥{item.sum}</span>
                       </span>
 
-              <div className="percent-bar" style={{width: item.percent + '%'}}/>
-            </div>
+                <div className="percent-bar" style={{width: item.percent + '%'}}/>
+              </div>
 
-          </li>
-        );
-      })}
+            </li>
+          );
+        })}
     </Wrapper>
   );
 };
