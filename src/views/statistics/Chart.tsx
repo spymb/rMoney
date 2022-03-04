@@ -44,9 +44,6 @@ const Chart: FC<Props> = (props) => {
 
   const xData = dateType === 'month' ? daysArray : monthsArray;
   const yData = dateType === 'month' ? getSumForDay_Month(day) : getSumForMonth_Year(day);
-  const recordsByMonth = getRecordsByTime(day, 'month');
-  console.log(recordsByMonth);
-
 
   const option: EChartOption = {
     tooltip: {

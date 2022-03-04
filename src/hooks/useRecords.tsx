@@ -3,7 +3,7 @@ import {useUpdate} from './useUpdate';
 import dayjs from 'dayjs';
 
 export type RecordItem = {
-  tagIDs: number[]
+  tagID: number
   notes: string
   category: '-' | '+'
   amount: number
@@ -20,7 +20,7 @@ export const useRecords = () => {
     window.localStorage.setItem('records', JSON.stringify(records));
   }, [records]);
   const addRecord = (newRecord: newRecordItem) => {
-    if (newRecord.tagIDs.length === 0) {
+    if (newRecord.tagID === undefined) {
       alert('请选择标签');
       newRecord.amount = 0;
       return false;
@@ -35,8 +35,13 @@ export const useRecords = () => {
   };
   const getRecordsByTime = (time: Date, unit: dayjs.UnitType) => {
     return records.filter(record => {
-      return dayjs(time).isSame(record.createdAt, unit)
-    })
+      return dayjs(time).isSame(record.createdAt, unit);
+    });
+  };
+  const getRecordsByCategory = (records: RecordItem[], category: '-' | '+') => {
+    return records.filter(r => {
+      return r.category === category;
+    });
   };
   const getDaySum = (records: RecordItem[], category: '-' | '+', time: string) => {
     const recordsByCategory = records.map(record => {
@@ -63,7 +68,7 @@ export const useRecords = () => {
     });
 
     // @ts-ignore
-    return holder[dayjs(time).format('YYYY-MM-DD')]
-  }
-  return {records, addRecord, getRecordsByTime, getDaySum};
+    return holder[dayjs(time).format('YYYY-MM-DD')];
+  };
+  return {records, addRecord, getRecordsByTime, getDaySum, getRecordsByCategory};
 };
