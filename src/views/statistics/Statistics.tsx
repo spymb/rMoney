@@ -19,7 +19,7 @@ const TimeSelector = styled.div`
 `;
 const CategoryWrapper = styled.div`
   font-size: 14px;
-  padding: 0 160px;
+  padding: 0 120px;
   margin: 10px 0;
 
   > ul {

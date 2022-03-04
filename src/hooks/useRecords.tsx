@@ -44,12 +44,9 @@ export const useRecords = () => {
     });
   };
   const getDaySum = (records: RecordItem[], category: '-' | '+', time: string) => {
-    const recordsByCategory = records.map(record => {
-      if (record.category === category) {
-        return record;
-      }
-    });
-    const recordsFormatTime = recordsByCategory.map(r => {
+    const recordsByCategory = getRecordsByCategory(records, category)
+    const recordsClone: RecordItem[] = JSON.parse(JSON.stringify((recordsByCategory)));
+    const recordsFormatTime = recordsClone.map(r => {
       if (r === undefined) {return; }
       r['createdAt'] = dayjs(r.createdAt).format('YYYY-MM-DD');
       return r;
@@ -70,5 +67,6 @@ export const useRecords = () => {
     // @ts-ignore
     return holder[dayjs(time).format('YYYY-MM-DD')];
   };
+
   return {records, addRecord, getRecordsByTime, getDaySum, getRecordsByCategory};
 };

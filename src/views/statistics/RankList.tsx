@@ -96,7 +96,7 @@ const RankList: React.FunctionComponent<Props> = (props) => {
   const sumForTags = getSumForTags(recordsByCategory);
   const kvArray = Object.entries(sumForTags);
   kvArray.sort((a, b) => b[1] - a[1]);
-  const total = kvArray.reduce((acc, [, sum]) => acc + sum, 0);
+  const total = kvArray.reduce((pre, [, sum]) => pre + sum, 0);
   const tagRankData = kvArray.map(item => {
     const [tagID, sum] = item;
     return {

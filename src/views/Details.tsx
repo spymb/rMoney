@@ -4,7 +4,11 @@ import styled from 'styled-components';
 import {RecordItem, useRecords} from '../hooks/useRecords';
 import {useTags} from '../hooks/useTags';
 import dayjs from 'dayjs';
-import {CategorySection} from './money/CategorySection';
+import {Category} from '../components/Category';
+import {CategoryWrapper} from '../components/InAndOut';
+import {mainColor} from '../color';
+import DatePicker from '../components/date_picker/DatePicker';
+import PopUp from '../components/date_picker/Popup';
 
 const Item = styled.div`
   border-bottom: 1px solid #c4c4c4;
@@ -14,29 +18,49 @@ const Item = styled.div`
   font-size: 18px;
   line-height: 20px;
   padding: 10px 16px;
+
   > .notes {
     margin-right: auto;
     margin-left: 16px;
     color: #999;
   }
 `;
-const Header = styled.h3`
+const TimeAndMoney = styled.header`
+  display: flex;
+  justify-content: space-between;
   font-size: 18px;
-  line-height: 20px;
-  padding: 10px 16px;
+  padding: 15px;
+`;
+const TimeSelector = styled.div`
+  box-shadow: inset 0 -5px 5px -5px rgba(0, 0, 0, 0.25);
+  background: white;
+  padding: 10px 0;
+  text-align: center;
+  color: ${mainColor};
 `;
 
-interface Props {}
-
-const Details: FC<Props> = () => {
+const Details: FC = () => {
   const [category, setCategory] = useState<'-' | '+'>('-');
-  const {records} = useRecords();
+  const [day, setDay] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const {records, getDaySum} = useRecords();
   const {getTagName} = useTags();
   const recordsByC = records.filter(r => r.category === category);
   const hash: { [K: string]: RecordItem[] } = {};
 
+  const handleDateClick = () => {
+    setShowDatePicker(true);
+  };
+  const handleOk = (d: Date) => {
+    setDay(d);
+    setShowDatePicker(false);
+  };
+  const handleCancel = () => {
+    setShowDatePicker(false);
+  };
+
   recordsByC.map(r => {
-    const key = dayjs(r.createdAt).format('YYYY年MM月DD日');
+    const key = dayjs(r.createdAt).format('YYYY-MM-DD');
     if (!(key in hash)) {
       hash[key] = [];
     }
@@ -53,22 +77,35 @@ const Details: FC<Props> = () => {
 
   return (
     <Layout>
-      <CategorySection value={category}
-                       onChange={value => setCategory(value)}/>
+      <CategoryWrapper>
+        <Category value={category}
+                  onChange={value => setCategory(value)}/>
+      </CategoryWrapper>
+
+      <TimeSelector onClick={handleDateClick}>
+        {dayjs(day).format('YYYY年MM月DD日')}&#9660;
+      </TimeSelector>
 
       {
         array.map(([date, records]) =>
-          <div>
-            <Header>
-              {date}
-            </Header>
+          <div key={date}>
+            <TimeAndMoney>
+              <div className="time">
+                {dayjs(date).format('YYYY年MM月DD日')}
+              </div>
+
+              <div className="money">
+                总计：￥{getDaySum(records, category, date)}
+              </div>
+            </TimeAndMoney>
+
 
             <div>
               {
                 records.map(r => {
                   return <Item key={r.createdAt}>
                     <div className="tags">
-                      {r.tagIDs.map(id => <span key={id}>{getTagName(id)}</span>)}
+                      <span>{getTagName(r.tagID)}</span>
                     </div>
 
                     {r.notes && <div className="notes">{r.notes}</div>}
@@ -80,6 +117,18 @@ const Details: FC<Props> = () => {
             </div>
           </div>)
       }
+
+      <PopUp
+        show={showDatePicker}
+        onCancel={handleCancel}
+        position="bottom"
+      >
+        <DatePicker
+          date={day}
+          pickerType={'date'}
+          onOk={handleOk}
+        />
+      </PopUp>
     </Layout>
   );
 };
