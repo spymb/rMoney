@@ -71,7 +71,7 @@ const Statistics: React.FunctionComponent = () => {
         <InOrOut value={category} onChange={setCategory}/>
       </CategoryWrapper>
 
-      <Chart day={day} dateType={dateType}/>
+      <Chart day={day} dateType={dateType} moneyType={category}/>
 
 
       <RankList day={day} dateType={dateType} category={category}/>

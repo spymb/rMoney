@@ -117,7 +117,10 @@ const RankList: React.FunctionComponent<Props> = (props) => {
           return (
             <li className="rank-list-item" key={item.tag.id}>
               <div className="icon-wrapper">
-                <Icon className="icon" size="24px" name={item.tag.icon}/>
+                {
+                  item.tag.icon === undefined ? '' :
+                    <Icon className="icon" name={item.tag.icon}/>
+                }
               </div>
 
               <div className="info">

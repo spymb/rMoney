@@ -20,7 +20,7 @@ export const useRecords = () => {
     window.localStorage.setItem('records', JSON.stringify(records));
   }, [records]);
   const addRecord = (newRecord: newRecordItem) => {
-    if (newRecord.tagID === undefined) {
+    if (newRecord.tagID <= 0) {
       alert('请选择标签');
       newRecord.amount = 0;
       return false;

@@ -9,10 +9,11 @@ const Echarts = lazy(() => import('../../components/ECharts'));
 interface Props {
   day: Date;
   dateType: 'date' | 'month' | 'year';
+  moneyType: '-' | '+'
 }
 
 const Chart: FC<Props> = (props) => {
-  const {day, dateType} = props;
+  const {day, dateType, moneyType} = props;
   const {getRecordsByTime} = useRecords();
 
   const daysArray = Array(dayjs(day).daysInMonth()).fill(0).map((_, index) => index + 1);
@@ -56,7 +57,7 @@ const Chart: FC<Props> = (props) => {
       },
       confine: true,
       position: function (point) {
-        return [point[0], '30%'];
+        return [point[0], '30%']
       }
     },
     grid: {
@@ -68,6 +69,7 @@ const Chart: FC<Props> = (props) => {
     color: [mainColor],
     title: {
       text: `${dateType === 'year' ? '年' : '月'}度趋势图`,
+      top: 5,
       left: 'center',
       textStyle: {
         fontSize: 14,
@@ -85,7 +87,7 @@ const Chart: FC<Props> = (props) => {
       type: 'value',
       show: false
     },
-    series: [{
+    series: [moneyType === '-' ? {
       name: '支出',
       seriesLayoutBy: 'row',
       type: 'line',
@@ -96,7 +98,7 @@ const Chart: FC<Props> = (props) => {
         width: 1,
       },
       data: yData['-']
-    }, {
+    } : {
       name: '收入',
       seriesLayoutBy: 'row',
       type: 'line',
