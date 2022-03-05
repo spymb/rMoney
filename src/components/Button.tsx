@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import {mainColor} from '../color';
 
 const Button = styled.button`
   font-size: 18px; border: none; padding: 8px 12px;
-  background: #005DFF; border-radius: 4px;
+  background: ${mainColor}; border-radius: 4px;
   color: white;
 `;
 

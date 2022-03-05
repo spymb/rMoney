@@ -3,16 +3,37 @@ import dayjs from 'dayjs';
 import {RecordItem, useRecords} from '../../hooks/useRecords';
 import styled from 'styled-components';
 import {useTags} from '../../hooks/useTags';
+import Icon from '../../components/Icon';
+import {mainColor} from '../../color';
 
 const Item = styled.div`
   border-bottom: 1px solid #c4c4c4;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background: white;
   font-size: 18px;
-  line-height: 20px;
   padding: 10px 16px;
 
+  > .tags {
+    display: flex;
+    align-items: center;
+    > .icon-wrapper {
+      width: 40px;
+      height: 40px;
+      background-color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 20px;
+      margin-right: 10px;
+
+      .icon {
+        fill: ${mainColor};
+      }
+    }
+  }
+  
   > .notes {
     margin-right: auto;
     margin-left: 16px;
@@ -40,7 +61,7 @@ interface Props {
 const RecordsList: React.FunctionComponent<Props> = (props) => {
   const {day, dateType} = props;
   const {getDaySum, getRecordsByTime} = useRecords();
-  const {getTagName} = useTags();
+  const {getTagName, findTag} = useTags();
   const recordsByTime = getRecordsByTime(day, dateType);
   const hash: { [K: string]: RecordItem[] } = {};
 
@@ -85,6 +106,9 @@ const RecordsList: React.FunctionComponent<Props> = (props) => {
                 records.map(r => {
                   return <Item key={r.createdAt}>
                     <div className="tags">
+                      <span className="icon-wrapper">
+                        <Icon className="icon" name={findTag(r.tagID).icon}/>
+                      </span>
                       <span>{getTagName(r.tagID)}</span>
                     </div>
 

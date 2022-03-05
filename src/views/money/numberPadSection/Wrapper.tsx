@@ -32,38 +32,38 @@ const Wrapper = styled.section`
       }
 
       &:nth-child(1) {
-        background: #f2f2f2;
+        background: #d5e5f3;
       }
 
       &:nth-child(2),
       &:nth-child(5) {
-        background: #E0E0E0;
+        background: #c6dff3;
       }
 
       &:nth-child(3),
       &:nth-child(6),
       &:nth-child(9) {
-        background: #D3D3D3;
+        background: #b8d8f3;
       }
 
       &:nth-child(4),
       &:nth-child(7),
       &:nth-child(10) {
-        background: #C1C1C1;
+        background: #a9d2f4;
       }
 
       &:nth-child(8),
       &:nth-child(11),
       &:nth-child(13) {
-        background: #B8B8B8;
+        background: #9accf4;
       }
 
       &:nth-child(12) {
-        background: #9A9A9A;
+        background: #7dbff4;
       }
 
       &:nth-child(14) {
-        background: #A9A9A9;
+        background: #8cc5f4;
       }
     }
   }

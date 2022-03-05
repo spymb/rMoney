@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import React from 'react';
 import Icon from './Icon';
 import {NavLink} from 'react-router-dom';
+import {mainColor} from '../color';
 
 const NavWrapper = styled.nav`
   background: white;
@@ -28,10 +29,10 @@ const NavWrapper = styled.nav`
         }
 
         &.active {
-          color: #005DFF;
+          color: ${mainColor};
 
           .icon {
-            fill: #005DFF;
+            fill: ${mainColor};
           }
         }
       }

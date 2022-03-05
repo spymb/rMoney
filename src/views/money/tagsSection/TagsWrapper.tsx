@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {mainColor} from '../../../color';
 
 const TagsWrapper = styled.section`
   font-size: 12px;
@@ -44,13 +45,13 @@ const TagsWrapper = styled.section`
       }
 
       &.selected {
-        color: #005DFF;
+        color: ${mainColor};
 
         > div {
           background: #E8F1FF;
 
           .icon {
-            fill: #005DFF;
+            fill: ${mainColor};
           }
         }
       }

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import {FC, useRef} from 'react';
 import Icon from '../../../components/Icon';
+import {mainColor} from '../../../color';
 
 const Wrapper = styled.label`
   display: flex;
@@ -57,7 +58,7 @@ const EditTag: FC<Props> = (props) => {
   return (
     <Wrapper>
       <IconWrapper>
-        <Icon className="icon" name={icon}/>
+        <Icon className="icon" name={icon} fill={mainColor}/>
       </IconWrapper>
 
       <NameInput type="text" defaultValue={tagName}

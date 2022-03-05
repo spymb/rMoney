@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {mainColor} from '../../../color';
 
 const Wrapper = styled.div`
   display: flex;
@@ -11,8 +12,12 @@ const Topbar = styled.header`
   align-items: center;
   line-height: 20px;
   padding: 20px;
-  background: #c4c4c4;
+  background: ${mainColor};
   font-size: 20px;
+  color: white;
+  > .icon {
+    fill: white;
+  }
 `;
 
 export {Wrapper, Topbar}

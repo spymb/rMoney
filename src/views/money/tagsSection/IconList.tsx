@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import React from 'react';
 import classNames from 'classnames';
 import Icon from '../../../components/Icon';
+import {mainColor} from '../../../color';
 
 const Wrapper = styled.ul`
   display: flex;
@@ -30,7 +31,7 @@ const Wrapper = styled.ul`
         background: #E8F1FF;
 
         .icon {
-          fill: #005DFF;
+          fill: ${mainColor};
         }
       }
     }
