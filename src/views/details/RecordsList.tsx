@@ -5,7 +5,11 @@ import styled from 'styled-components';
 import {useTags} from '../../hooks/useTags';
 import Icon from '../../components/Icon';
 import {mainColor} from '../../color';
-
+const FallBackMessage = styled.div`
+  font-size: 20px;
+  line-height: 160px;
+  text-align: center;
+`;
 const Item = styled.div`
   border-bottom: 1px solid #c4c4c4;
   display: flex;
@@ -82,7 +86,7 @@ const RecordsList: React.FunctionComponent<Props> = (props) => {
   return (
 
     <div>
-      {
+      {array.length === 0 ? <FallBackMessage>暂无数据</FallBackMessage> :
         array.map(([date, records]) =>
           <div key={date}>
             <TimeAndMoney>

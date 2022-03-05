@@ -29,7 +29,7 @@ const TimeAndMoney = styled.header`
 `;
 const CategoryWrapper = styled.div`
   font-size: 14px;
-  padding: 0 120px;
+  padding: 0 110px;
   margin: 10px 0;
 
   > ul {
@@ -92,8 +92,8 @@ const Statistics: React.FunctionComponent = () => {
         <InOrOut value={category} onChange={setCategory}/>
       </CategoryWrapper>
 
-      <Chart day={day} dateType={dateType} moneyType={category}/>
 
+      <Chart day={day} dateType={dateType} moneyType={category}/>
 
       <RankList day={day} dateType={dateType} category={category}/>
 
