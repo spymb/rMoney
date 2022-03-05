@@ -6,9 +6,9 @@ import {NotesSection} from './NotesSection';
 import {NumberPadSection} from './numberPadSection/NumberPadSection';
 import Icon from '../../components/Icon';
 import {Link} from 'react-router-dom';
-import {Category} from '../../components/Category';
+import {InOrOut} from '../../components/InOrOut';
 import {useRecords} from '../../hooks/useRecords';
-import {CategoryWrapper} from '../../components/InAndOut';
+import {mainColor} from '../../color';
 
 const MyLayout = styled(Layout)`
   display: flex;
@@ -20,7 +20,27 @@ const defaultFormData = {
   notes: '',
   amount: 0
 };
+const CategoryWrapper = styled.section`
+  font-size: 24px;
+  
+  > ul {
+    box-shadow: inset 0 -5px 5px -5px rgba(0, 0, 0, 0.25),
+    inset 0 5px 5px -5px rgba(0, 0, 0, 0.25);
+    display: flex;
+    background: white;
 
+    > li {
+      width: 50%;
+      text-align: center;
+      padding: 16px 0;
+      
+      &.selected {
+        background: ${mainColor};
+        color: white;
+      }
+    }
+  }
+`
 function Money() {
   const [formData, setFormData] = useState(defaultFormData);
   const {addRecord} = useRecords();
@@ -42,8 +62,8 @@ function Money() {
   return (
     <MyLayout>
       <CategoryWrapper>
-        <Category value={formData.category}
-                  onChange={category => onChange({category})}/>
+        <InOrOut value={formData.category}
+                 onChange={category => onChange({category})}/>
       </CategoryWrapper>
 
       <TagsSection ID={formData.tagID} category={formData.category}

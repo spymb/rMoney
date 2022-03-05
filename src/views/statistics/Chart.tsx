@@ -8,7 +8,7 @@ const Echarts = lazy(() => import('../../components/ECharts'));
 
 interface Props {
   day: Date;
-  dateType: 'month' | 'year';
+  dateType: 'date' | 'month' | 'year';
 }
 
 const Chart: FC<Props> = (props) => {

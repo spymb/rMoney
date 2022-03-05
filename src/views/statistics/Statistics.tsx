@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 import Layout from '../../components/Layout';
 import {Chart} from './Chart';
-import {MonthOrYear} from './MonthOrYear';
+import {DateTypeSelector} from '../../components/DateTypeSelector';
 import DatePicker from '../../components/date_picker/DatePicker';
 import PopUp from '../../components/date_picker/Popup';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
 import {mainColor} from '../../color';
 import {RankList} from './RankList';
-import {Category} from '../../components/Category';
+import {InOrOut} from '../../components/InOrOut';
 
 const TimeSelector = styled.div`
   box-shadow: inset 0 -5px 5px -5px rgba(0, 0, 0, 0.25);
@@ -42,7 +42,7 @@ const CategoryWrapper = styled.div`
 `;
 
 const Statistics: React.FunctionComponent = () => {
-  const [dateType, setDateType] = useState<'month' | 'year'>('month');
+  const [dateType, setDateType] = useState<'date' | 'month' | 'year'>('month');
   const [day, setDay] = useState(new Date());
   const [category, setCategory] = useState<'-' | '+'>('-');
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -61,14 +61,14 @@ const Statistics: React.FunctionComponent = () => {
 
   return (
     <Layout>
-      <MonthOrYear value={dateType} onChange={setDateType}/>
+      <DateTypeSelector value1={dateType} value2={'year'} onChange={setDateType}/>
 
       <TimeSelector onClick={handleDateClick}>
         {dateStr}&#9660;
       </TimeSelector>
 
       <CategoryWrapper>
-        <Category value={category} onChange={setCategory}/>
+        <InOrOut value={category} onChange={setCategory}/>
       </CategoryWrapper>
 
       <Chart day={day} dateType={dateType}/>

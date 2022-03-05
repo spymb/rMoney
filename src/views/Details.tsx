@@ -4,11 +4,10 @@ import styled from 'styled-components';
 import {RecordItem, useRecords} from '../hooks/useRecords';
 import {useTags} from '../hooks/useTags';
 import dayjs from 'dayjs';
-import {Category} from '../components/Category';
-import {CategoryWrapper} from '../components/InAndOut';
 import {mainColor} from '../color';
 import DatePicker from '../components/date_picker/DatePicker';
 import PopUp from '../components/date_picker/Popup';
+import {DateTypeSelector} from '../components/DateTypeSelector';
 
 const Item = styled.div`
   border-bottom: 1px solid #c4c4c4;
@@ -40,6 +39,7 @@ const TimeSelector = styled.div`
 `;
 
 const Details: FC = () => {
+  const [dateType, setDateType] = useState<'year' | 'month' | 'date'>('date');
   const [category, setCategory] = useState<'-' | '+'>('-');
   const [day, setDay] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -77,10 +77,7 @@ const Details: FC = () => {
 
   return (
     <Layout>
-      <CategoryWrapper>
-        <Category value={category}
-                  onChange={value => setCategory(value)}/>
-      </CategoryWrapper>
+      <DateTypeSelector value1={dateType} value2={'month'} onChange={setDateType}/>
 
       <TimeSelector onClick={handleDateClick}>
         {dayjs(day).format('YYYY年MM月DD日')}&#9660;

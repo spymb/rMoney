@@ -72,7 +72,7 @@ const FallBackMessage = styled.div`
 
 interface Props {
   day: Date;
-  dateType: 'month' | 'year';
+  dateType: 'date' | 'month' | 'year';
   category: '-' | '+';
 }
 

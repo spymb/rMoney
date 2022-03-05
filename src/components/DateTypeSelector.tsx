@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, {useState} from 'react';
-import {mainColor} from '../../color';
+import {mainColor} from '../color';
 
 const Wrapper = styled.section`
   font-size: 24px;
@@ -25,17 +25,17 @@ const Wrapper = styled.section`
   }
   `
 
-
-
 type Props = {
-  value: 'month' | 'year'
-  onChange: (value: 'month' | 'year') => void
+  value1: 'date' | 'month' | 'year'
+  value2: 'date' | 'month' | 'year'
+  onChange: (value: 'date' | 'month' | 'year') => void
 }
 
-const MonthOrYear: React.FC<Props> = (props) => {
-  const categoryMap = {'month': '月', 'year': '年'};
-  const [categoryList] = useState<('month' | 'year')[]>(['month', 'year']);
-  const category = props.value;
+const DateTypeSelector: React.FC<Props> = (props) => {
+  const {value1, value2} = props
+  const categoryMap = {'month': '月', 'year': '年', 'date': '日'};
+  const [categoryList] = useState<('date' | 'month' | 'year')[]>([value1, value2]);
+  const category = value1;
 
   return (
     <Wrapper>
@@ -55,4 +55,4 @@ const MonthOrYear: React.FC<Props> = (props) => {
   );
 };
 
-export {MonthOrYear};
+export {DateTypeSelector};
