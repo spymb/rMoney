@@ -77,9 +77,9 @@ interface Props {
 }
 
 const RankList: React.FunctionComponent<Props> = (props) => {
+  const {dateType, day, category} = props;
   const {getRecordsByTime, getRecordsByCategory} = useRecords();
   const {findTag} = useTags();
-  const {dateType, day, category} = props;
   const getSumForTags = (records: RecordItem[]) => {
     const initial: { [tagID: string]: number } = {};
     return records.reduce((pre, record) => {

@@ -9,13 +9,23 @@ import styled from 'styled-components';
 import {mainColor} from '../../color';
 import {RankList} from './RankList';
 import {InOrOut} from '../../components/InOrOut';
+import {useRecords} from '../../hooks/useRecords';
 
-const TimeSelector = styled.div`
+const TimeAndMoney = styled.header`
   box-shadow: inset 0 -5px 5px -5px rgba(0, 0, 0, 0.25);
   background: white;
-  padding: 10px 0;
+  padding: 10px 15px;
   text-align: center;
   color: ${mainColor};
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+
+  > .money {
+    > span {
+      margin-left: 10px;
+    }
+  }
 `;
 const CategoryWrapper = styled.div`
   font-size: 14px;
@@ -46,6 +56,7 @@ const Statistics: React.FunctionComponent = () => {
   const [day, setDay] = useState(new Date());
   const [category, setCategory] = useState<'-' | '+'>('-');
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const {getSum, records} = useRecords();
   const dateStr = dayjs(day).format(dateType === 'year' ? 'YYYY年' : 'YYYY年M月');
 
   const handleOk = (d: Date) => {
@@ -59,13 +70,23 @@ const Statistics: React.FunctionComponent = () => {
     setShowDatePicker(true);
   };
 
+  const outcome = getSum(records, '-', day.toISOString(), dateType) || 0;
+  const income = getSum(records, '+', day.toISOString(), dateType) || 0;
+
   return (
     <Layout>
       <DateTypeSelector value1={dateType} value2={'year'} onChange={setDateType}/>
 
-      <TimeSelector onClick={handleDateClick}>
-        {dateStr}&#9660;
-      </TimeSelector>
+      <TimeAndMoney>
+        <div className="time" onClick={handleDateClick}>
+          {dateStr}&#9660;
+        </div>
+
+        <div className="money">
+          <span>支出￥{outcome}</span>
+          <span>收入￥{income}</span>
+        </div>
+      </TimeAndMoney>
 
       <CategoryWrapper>
         <InOrOut value={category} onChange={setCategory}/>

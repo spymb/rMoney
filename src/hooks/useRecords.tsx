@@ -43,30 +43,51 @@ export const useRecords = () => {
       return r.category === category;
     });
   };
-  const getDaySum = (records: RecordItem[], category: '-' | '+', time: string) => {
-    const recordsByCategory = getRecordsByCategory(records, category)
-    const recordsClone: RecordItem[] = JSON.parse(JSON.stringify((recordsByCategory)));
-    const recordsFormatTime = recordsClone.map(r => {
-      if (r === undefined) {return; }
-      r['createdAt'] = dayjs(r.createdAt).format('YYYY-MM-DD');
-      return r;
-    });
+  const getSum =
+    (records: RecordItem[], category: '-' | '+', time: string, dateType: 'date' | 'month' | 'year') => {
+      const recordsByCategory = getRecordsByCategory(records, category);
+      const recordsClone: RecordItem[] = JSON.parse(JSON.stringify((recordsByCategory)));
+      const recordsFormatTime = recordsClone.map(r => {
+        if (r === undefined) {return; }
+        if (dateType === 'date') {
+          r['createdAt'] = dayjs(r.createdAt).format('YYYY-MM-DD');
+        }
+        if (dateType === 'month') {
+          r['createdAt'] = dayjs(r.createdAt).format('YYYY-MM');
+        }
+        if (dateType === 'year') {
+          r['createdAt'] = dayjs(r.createdAt).format('YYYY');
+        }
+        return r;
+      });
 
-    const holder = {};
-    recordsFormatTime.map(r => {
-      if (r === undefined) {return; }
-      if (holder.hasOwnProperty(r.createdAt)) {
+      const holder = {};
+      recordsFormatTime.map(r => {
+        if (r === undefined) {return; }
+        if (holder.hasOwnProperty(r.createdAt)) {
+          // @ts-ignore
+          holder[r.createdAt] = holder[r.createdAt] + r.amount;
+        } else {
+          // @ts-ignore
+          holder[r.createdAt] = r.amount;
+        }
+      });
+
+      // @ts-ignore
+      if (dateType === 'date') {
         // @ts-ignore
-        holder[r.createdAt] = holder[r.createdAt] + r.amount;
-      } else {
-        // @ts-ignore
-        holder[r.createdAt] = r.amount;
+        return holder[dayjs(time).format('YYYY-MM-DD')];
       }
-    });
+      if (dateType === 'month') {
+        // @ts-ignore
+        return holder[dayjs(time).format('YYYY-MM')];
+      }
+      if (dateType === 'year') {
+        // @ts-ignore
+        return holder[dayjs(time).format('YYYY')];
+      }
 
-    // @ts-ignore
-    return holder[dayjs(time).format('YYYY-MM-DD')];
-  };
+    };
 
-  return {records, addRecord, getRecordsByTime, getDaySum, getRecordsByCategory};
+  return {records, addRecord, getRecordsByTime, getSum, getRecordsByCategory};
 };

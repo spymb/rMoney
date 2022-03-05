@@ -12,7 +12,7 @@ const Item = styled.div`
   justify-content: space-between;
   align-items: center;
   background: white;
-  font-size: 18px;
+  font-size: 16px;
   padding: 10px 16px;
 
   > .tags {
@@ -60,7 +60,7 @@ interface Props {
 
 const RecordsList: React.FunctionComponent<Props> = (props) => {
   const {day, dateType} = props;
-  const {getDaySum, getRecordsByTime} = useRecords();
+  const {getSum, getRecordsByTime} = useRecords();
   const {getTagName, findTag} = useTags();
   const recordsByTime = getRecordsByTime(day, dateType);
   const hash: { [K: string]: RecordItem[] } = {};
@@ -92,10 +92,10 @@ const RecordsList: React.FunctionComponent<Props> = (props) => {
 
               <div className="money">
                 <span>
-                  支出￥{getDaySum(records, '-', date) || 0}
+                  支出￥{getSum(records, '-', date, 'date') || 0}
                 </span>
                 <span>
-                  收入￥{getDaySum(records, '+', date) || 0}
+                  收入￥{getSum(records, '+', date, 'date') || 0}
                 </span>
               </div>
             </TimeAndMoney>
