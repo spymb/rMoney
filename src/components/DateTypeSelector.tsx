@@ -24,7 +24,6 @@ const Wrapper = styled.section`
     }
   }
   `
-
 type Props = {
   value1: 'date' | 'month' | 'year'
   value2: 'date' | 'month' | 'year'
