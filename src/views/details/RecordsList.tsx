@@ -1,10 +1,10 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import {RecordItem, useRecords} from '../../hooks/useRecords';
+import { RecordItem, useRecords } from '../../hooks/useRecords';
 import styled from 'styled-components';
-import {useTags} from '../../hooks/useTags';
+import { useTags } from '../../hooks/useTags';
 import Icon from '../../components/Icon';
-import {mainColor} from '../../color';
+import { mainColor } from '../../color';
 const FallBackMessage = styled.div`
   font-size: 20px;
   line-height: 160px;
@@ -63,9 +63,9 @@ interface Props {
 }
 
 const RecordsList: React.FunctionComponent<Props> = (props) => {
-  const {day, dateType} = props;
-  const {getSum, getRecordsByTime} = useRecords();
-  const {getTagName, findTag} = useTags();
+  const { day, dateType } = props;
+  const { getSum, getRecordsByTime } = useRecords();
+  const { getTagName, findTag } = useTags();
   const recordsByTime = getRecordsByTime(day, dateType);
   const hash: { [K: string]: RecordItem[] } = {};
 
@@ -83,6 +83,7 @@ const RecordsList: React.FunctionComponent<Props> = (props) => {
       if (a[0] < b[0]) return 1;
       return 0;
     });
+
   return (
 
     <div>
@@ -111,7 +112,7 @@ const RecordsList: React.FunctionComponent<Props> = (props) => {
                   return <Item key={r.createdAt}>
                     <div className="tags">
                       <span className="icon-wrapper">
-                        <Icon className="icon" name={findTag(r.tagID).icon}/>
+                        <Icon className="icon" name={findTag(r.tagID).icon} />
                       </span>
                       <span>{getTagName(r.tagID)}</span>
                     </div>
