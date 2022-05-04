@@ -5,6 +5,6 @@ cd build &&
 git init &&
 git add . &&
 git commit -m 'deployed' &&
-git remote add origin git@github.com:spymb/money2-deploy.git &&
-git push -u origin main -f
+git remote add origin git@gitee.com:spym404/r-money-website.git &&
+git push -u origin "master" -f
 cd -
