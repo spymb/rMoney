@@ -43,16 +43,19 @@ const useTags = () => {
     return result;
   };
   const updateTag = (ID: number, obj: { name: string }) => {
-    setTags(tags.map(tag => {
-      if (obj.name === '') {
-        window.location.reload();
-        return tag;
-      }
-      const {name, ...rest} = tag;
-      return tag.id === ID ? {name: obj.name, ...rest} : tag;
-    }));
+    const names = tags.map(item => item.name);
+    if (obj.name === '') {
+      window.alert('标签名不能为空');
+    } else if (names.indexOf(obj.name) >= 0) {
+      window.alert('标签名不能重复');
+    } else {
+      setTags(tags.map(tag => {
+        const {name, ...rest} = tag;
+        return tag.id === ID ? {name: obj.name, ...rest} : tag;
+      }));
+      window.alert('成功修改标签名');
+    }
     window.location.reload();
-    window.alert('成功修改标签名');
   };
   const deleteTag = (id: number) => {
     setTags(tags.filter(tag => tag.id !== id));
@@ -61,15 +64,19 @@ const useTags = () => {
   };
   const addTag = (obj: { name: string }, iconName: string, type: '-' | '+') => {
     const names = tags.map(item => item.name);
-    if (obj.name === '') {
-      window.alert('标签名不能为空');
-    } else if (names.indexOf(obj.name) >= 0) {
-      window.alert('标签名不能重复');
+    if (iconName === 'tag') {
+      window.alert('请选择图标');
     } else {
-      setTags([...tags, {id: createID(), name: obj.name, icon: iconName, type: type}]);
-      window.alert('成功添加标签');
+      if (obj.name === '') {
+        window.alert('标签名不能为空');
+      } else if (names.indexOf(obj.name) >= 0) {
+        window.alert('标签名不能重复');
+      } else {
+        setTags([...tags, {id: createID(), name: obj.name, icon: iconName, type: type}]);
+        window.alert('成功添加标签');
+      }
+      window.location.reload();
     }
-    window.location.reload();
   };
   const getTagName = (id: number) => {
     const tag = findTag(id);
