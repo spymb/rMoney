@@ -10,8 +10,6 @@ import {Center} from '../../../components/Center';
 import {Topbar} from './SetAddWrapper';
 import Layout from '../../../components/Layout';
 
-
-
 const AddTag: React.FC = () => {
   const navigate = useNavigate();
   const {addTag} = useTags();
@@ -19,7 +17,6 @@ const AddTag: React.FC = () => {
   const [tagName, setTagName] = useState<{name: string}>({name: ''});
   let {id} = useParams();
   let pathID = id as '-' | '+';
-
 
   return (
     <Layout>

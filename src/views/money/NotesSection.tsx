@@ -23,7 +23,7 @@ const NotesSection: React.FC<Props> = (props) => {
   return (
     <Wrapper>
       <Input label="备注" type="text" value={notes} onChange = {onChange}
-             placeholder="请填写备注"/>
+             placeholder="请填写备注" maxLength={32}/>
     </Wrapper>
   );
 

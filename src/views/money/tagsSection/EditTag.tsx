@@ -64,7 +64,7 @@ const EditTag: FC<Props> = (props) => {
       <NameInput type="text" defaultValue={tagName}
                  ref={refInput}
                  onBlur={blurer}
-                 placeholder={holder()}/>
+                 placeholder={holder()} maxLength={5}/>
     </Wrapper>
   );
 };
