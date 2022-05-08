@@ -5,13 +5,11 @@ import {CSSTransition} from "react-transition-group";
 import {FC} from 'react';
 
 const Wrapper = styled.div`
+  width: 100%;
   position: absolute;
   background-color: #fff;
-  &.top { top: 0; left: 0; width: 100%; }
-  &.left { top: 0; left: 0; height: 100%; }
-  &.right { top: 0; right: 0; height: 100%; }
-  &.bottom { bottom: 0; left: 0; width: 100%; }
-  &.center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+  max-width: 420px;
+  &.bottom {bottom: 0; left: 50%; transform: translate(-50%, 0%); }
 `
 
 type PopUpPosition = 'top' | 'left' | 'right' | 'bottom' | 'center';
