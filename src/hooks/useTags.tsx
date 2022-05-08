@@ -58,9 +58,14 @@ const useTags = () => {
     window.location.reload();
   };
   const deleteTag = (id: number) => {
-    setTags(tags.filter(tag => tag.id !== id));
-    window.alert('成功删除标签');
-    window.location.reload();
+    const ids = tags.map(item => item.id);
+    if (ids.indexOf(id) >= 0) {
+      setTags(tags.filter(tag => tag.id !== id));
+      window.alert('成功删除标签');
+      window.location.reload();
+    } else {
+      window.alert('请选择标签');
+    }
   };
   const addTag = (obj: { name: string }, iconName: string, type: '-' | '+') => {
     const names = tags.map(item => item.name);
