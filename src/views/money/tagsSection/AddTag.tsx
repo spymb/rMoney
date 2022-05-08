@@ -7,7 +7,8 @@ import {useTags} from '../../../hooks/useTags';
 import {Space} from '../../../components/Space';
 import {Button} from '../../../components/Button';
 import {Center} from '../../../components/Center';
-import {Topbar, Wrapper} from './SetAddWrapper';
+import {Topbar} from './SetAddWrapper';
+import Layout from '../../../components/Layout';
 
 
 
@@ -21,7 +22,7 @@ const AddTag: React.FC = () => {
 
 
   return (
-    <Wrapper>
+    <Layout>
       <Topbar>
         <Icon name="left" onClick={() => navigate(-1)}/>
         <span>添加{pathID === '-' ? '支出' : '收入'}标签</span>
@@ -38,7 +39,7 @@ const AddTag: React.FC = () => {
         <Space/>
         <Button onClick={() => addTag(tagName, name, pathID)}>添加标签</Button>
       </Center>
-    </Wrapper>
+    </Layout>
   );
 };
 

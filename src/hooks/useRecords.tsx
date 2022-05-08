@@ -31,6 +31,7 @@ export const useRecords = () => {
     }
     const record = {...newRecord, createdAt: (new Date()).toISOString()};
     setRecords([...records, record]);
+    window.alert('成功添加记录');
     return true;
   };
   const getRecordsByTime = (time: Date, unit: dayjs.UnitType) => {

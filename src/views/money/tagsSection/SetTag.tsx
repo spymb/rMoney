@@ -7,7 +7,8 @@ import {Center} from '../../../components/Center';
 import {Link, useNavigate, useParams} from 'react-router-dom';
 import Icon from '../../../components/Icon';
 import {useTags} from '../../../hooks/useTags';
-import {Topbar, Wrapper} from './SetAddWrapper';
+import {Topbar} from './SetAddWrapper';
+import Layout from '../../../components/Layout';
 
 const SetTag: FC = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const SetTag: FC = () => {
 
 
   return (
-    <Wrapper>
+    <Layout>
       <Topbar>
         <Icon name="left" onClick={() => navigate(-1)}/>
         <span>管理{pathID === '-' ? '支出' : '收入'}标签</span>
@@ -46,7 +47,7 @@ const SetTag: FC = () => {
         <Space/>
         <Button onClick={() => deleteTag(ID)}>删除标签</Button>
       </Center>
-    </Wrapper>
+    </Layout>
   );
 };
 
