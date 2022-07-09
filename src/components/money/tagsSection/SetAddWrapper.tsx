@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {mainColor} from '../../../color';
+import {mainColor} from '../../../lib/color';
 
 const Topbar = styled.header`
   display: flex;

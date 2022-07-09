@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
-import Layout from '../../components/Layout';
-import {Chart} from './Chart';
-import {DateTypeSelector} from '../../components/DateTypeSelector';
-import DatePicker from '../../components/date_picker/DatePicker';
-import PopUp from '../../components/date_picker/Popup';
+import Layout from '../components/Layout';
+import {Chart} from '../components/statistics/Chart';
+import {DateTypeSelector} from '../components/DateTypeSelector';
+import DatePicker from '../components/date_picker/DatePicker';
+import PopUp from '../components/date_picker/Popup';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
-import {mainColor} from '../../color';
-import {RankList} from './RankList';
-import {InOrOut} from '../../components/InOrOut';
-import {useRecords} from '../../hooks/useRecords';
+import {mainColor} from '../lib/color';
+import {RankList} from '../components/statistics/RankList';
+import {InOrOut} from '../components/InOrOut';
+import {useRecords} from '../hooks/useRecords';
 
 const TimeAndMoney = styled.header`
   box-shadow: inset 0 -5px 5px -5px rgba(0, 0, 0, 0.25);
@@ -55,19 +55,19 @@ const Statistics: React.FunctionComponent = () => {
   const [dateType, setDateType] = useState<'date' | 'month' | 'year'>('month');
   const [day, setDay] = useState(new Date());
   const [category, setCategory] = useState<'-' | '+'>('-');
-  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [datePickerVisible, setDatePickerVisible] = useState(false);
   const {getSum, records} = useRecords();
   const dateStr = dayjs(day).format(dateType === 'year' ? 'YYYY年' : 'YYYY年M月');
 
   const handleOk = (d: Date) => {
     setDay(d);
-    setShowDatePicker(false);
+    setDatePickerVisible(false);
   };
   const handleCancel = () => {
-    setShowDatePicker(false);
+    setDatePickerVisible(false);
   };
   const handleDateClick = () => {
-    setShowDatePicker(true);
+    setDatePickerVisible(true);
   };
 
   const outcome = getSum(records, '-', day.toISOString(), dateType) || 0;
@@ -92,20 +92,19 @@ const Statistics: React.FunctionComponent = () => {
         <InOrOut value={category} onChange={setCategory}/>
       </CategoryWrapper>
 
-
       <Chart day={day} dateType={dateType} moneyType={category}/>
 
       <RankList day={day} dateType={dateType} category={category}/>
 
       <PopUp
-        show={showDatePicker}
+        visible={datePickerVisible}
         onCancel={handleCancel}
-        position="bottom"
       >
         <DatePicker
           date={day}
           pickerType={dateType}
           onOk={handleOk}
+          onCancel={handleCancel}
         />
       </PopUp>
     </Layout>

@@ -1,9 +1,9 @@
 import React from 'react';
-import Icon from '../../components/Icon';
+import Icon from '../Icon';
 import styled from 'styled-components';
-import {mainColor} from '../../color';
+import {mainColor} from '../../lib/color';
 import {RecordItem, useRecords} from '../../hooks/useRecords';
-import {useTags} from '../../hooks/useTags';
+import {Tag} from '../../hooks/useTags';
 
 const Wrapper = styled.ol`
   box-shadow: inset 0 5px 5px -5px rgba(0, 0, 0, 0.1);
@@ -78,8 +78,7 @@ interface Props {
 
 const RankList: React.FunctionComponent<Props> = (props) => {
   const {dateType, day, category} = props;
-  const {getRecordsByTime, getRecordsByCategory} = useRecords();
-  const {findTag} = useTags();
+  const {getRecordsByTime, getRecordsByCategory, records} = useRecords();
   const getSumForTags = (records: RecordItem[]) => {
     const initial: { [tagID: string]: number } = {};
     return records.reduce((pre, record) => {
@@ -91,16 +90,26 @@ const RankList: React.FunctionComponent<Props> = (props) => {
       return pre;
     }, initial);
   };
+
   const recordsByTime = getRecordsByTime(day, dateType);
   const recordsByCategory = getRecordsByCategory(recordsByTime, category);
   const sumForTags = getSumForTags(recordsByCategory);
+
   const kvArray = Object.entries(sumForTags);
   kvArray.sort((a, b) => b[1] - a[1]);
   const total = kvArray.reduce((pre, [, sum]) => pre + sum, 0);
+  const getTagFromRecords = (id: number) => {
+    const array = records.map(record => {
+      if(record.tagID === id)
+        return {icon: record.icon, name: record.name}
+    })
+    return array.filter(Boolean)[0]
+  }
+
   const tagRankData = kvArray.map(item => {
     const [tagID, sum] = item;
     return {
-      tag: findTag(parseInt(tagID)),
+      tag: getTagFromRecords(parseInt(tagID)) as Tag,
       sum,
       percent: sum / total * 100
     };
@@ -115,7 +124,7 @@ const RankList: React.FunctionComponent<Props> = (props) => {
       {tagRankData.length === 0 ? <FallBackMessage>暂无数据</FallBackMessage> :
         tagRankData.map(item => {
           return (
-            <li className="rank-list-item" key={item.tag.id}>
+            <li className="rank-list-item" key={item.tag.name}>
               <div className="icon-wrapper">
                 <Icon className="icon" name={item.tag.icon}/>
               </div>

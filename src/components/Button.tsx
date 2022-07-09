@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {mainColor} from '../color';
+import {mainColor} from '../lib/color';
 
 const Button = styled.button`
   font-size: 18px; border: none; padding: 8px 12px;

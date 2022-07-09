@@ -2,9 +2,9 @@ import React, {FC, lazy, Suspense} from 'react';
 import {EChartOption} from 'echarts';
 import {useRecords} from '../../hooks/useRecords';
 import dayjs from 'dayjs';
-import {mainColor} from '../../color';
+import {mainColor} from '../../lib/color';
 
-const Echarts = lazy(() => import('../../components/ECharts'));
+const Echarts = lazy(() => import('./ECharts'));
 
 interface Props {
   day: Date;
@@ -21,26 +21,26 @@ const Chart: FC<Props> = (props) => {
 // 某月每天收入支出统计
   const getSumForDay_Month = (date: Date) => {
     const recordsByMonth = getRecordsByTime(date, 'month');
-    const ret = {
+    const initial = {
       '+': daysArray.map(_ => 0),
       '-': daysArray.map(_ => 0)
     };
-    return recordsByMonth.reduce((acc, record) => {
-      acc[record.category][dayjs(record.createdAt).date() - 1] += record.amount;
-      return acc;
-    }, ret);
+    return recordsByMonth.reduce((result, record) => {
+      result[record.category][dayjs(record.createdAt).date() - 1] += record.amount;
+      return result;
+    }, initial);
   };
 // 某年每月收入支出统计
   const getSumForMonth_Year = (date: Date) => {
     const recordsByYear = getRecordsByTime(date, 'year');
-    const ret = {
+    const initial = {
       '-': monthsArray.map(_ => 0),
       '+': monthsArray.map(_ => 0)
     };
-    return recordsByYear.reduce((acc, record) => {
-      acc[record.category][dayjs(record.createdAt).month()] += record.amount;
-      return acc;
-    }, ret);
+    return recordsByYear.reduce((result, record) => {
+      result[record.category][dayjs(record.createdAt).month()] += record.amount;
+      return result;
+    }, initial);
   };
 
   const xData = dateType === 'month' ? daysArray : monthsArray;

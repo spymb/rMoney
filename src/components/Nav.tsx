@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import React from 'react';
 import Icon from './Icon';
 import {NavLink} from 'react-router-dom';
-import {mainColor} from '../color';
+import {mainColor} from '../lib/color';
 
 const NavWrapper = styled.nav`
   background: white;

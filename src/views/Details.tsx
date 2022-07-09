@@ -1,12 +1,12 @@
 import React, {FC, useState} from 'react';
-import Layout from '../../components/Layout';
+import Layout from '../components/Layout';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-import {mainColor} from '../../color';
-import DatePicker from '../../components/date_picker/DatePicker';
-import PopUp from '../../components/date_picker/Popup';
-import {DateTypeSelector} from '../../components/DateTypeSelector';
-import RecordsList from './RecordsList';
+import {mainColor} from '../lib/color';
+import DatePicker from '../components/date_picker/DatePicker';
+import PopUp from '../components/date_picker/Popup';
+import {DateTypeSelector} from '../components/DateTypeSelector';
+import RecordsList from '../components/statistics/RecordsList';
 
 const TimeSelector = styled.div`
   box-shadow: inset 0 -5px 5px -5px rgba(0, 0, 0, 0.25);
@@ -44,14 +44,14 @@ const Details: FC = () => {
       <RecordsList day={day} dateType={dateType}/>
 
       <PopUp
-        show={showDatePicker}
+        visible={showDatePicker}
         onCancel={handleCancel}
-        position="bottom"
       >
         <DatePicker
           date={day}
           pickerType={dateType}
           onOk={handleOk}
+          onCancel={handleCancel}
         />
       </PopUp>
     </Layout>

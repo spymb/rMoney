@@ -79,6 +79,7 @@ const useTags = () => {
       } else {
         setTags([...tags, {id: createID(), name: obj.name, icon: iconName, type: type}]);
         window.alert('成功添加标签');
+        return true;
       }
     }
   };

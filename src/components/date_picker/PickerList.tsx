@@ -43,6 +43,7 @@ const PickerList: FC<PickerListProps> = (props) => {
     top: '0px',
     transition: 'none'
   })
+  
   useEffect(() => {
     let index = -1
     for (let i = 0; i < listData.length; i++) {
@@ -58,6 +59,7 @@ const PickerList: FC<PickerListProps> = (props) => {
       }
     })
   }, [value, listData])
+
   const onTouchStart = (e: React.TouchEvent<HTMLUListElement>) => {
     setStartY(e.touches[0].clientY)
     setStartTop(parseInt(style.top))

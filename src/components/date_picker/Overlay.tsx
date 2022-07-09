@@ -1,7 +1,7 @@
-import React, {FC, MouseEvent} from 'react'
-import {createPortal} from "react-dom";
-import styled from "styled-components";
-import {CSSTransition} from "react-transition-group";
+import React, {FC, MouseEvent} from 'react';
+import {createPortal} from 'react-dom';
+import styled from 'styled-components';
+import {CSSTransition} from 'react-transition-group';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -12,46 +12,36 @@ const Wrapper = styled.div`
   background: rgba(0, 0, 0, 0.7);
   z-index: 1;
   transform: translateZ(0);
-`
+`;
 
 interface OverlayProps {
-  show: boolean
-  duration?: number
-  container?: string
-  animation?: string
-  onClick?: () => void
+  visible: boolean;
+  onClick: () => void;
 }
-const Overlay:FC<OverlayProps> = (props) => {
-  const {
-    container = 'body',
-    duration = 250,
-    animation = 'fade',
-    show = false,
-    onClick,
-    children
-  } = props
-  const containerElm = document.querySelector(container) || document.body
+
+const Overlay: FC<OverlayProps> = (props) => {
+  const {visible, onClick, children} = props;
+
   const handleClick = (e: MouseEvent) => {
-    if (e.target !== e.currentTarget) return
-    onClick && onClick()
-  }
+    if (e.target !== e.currentTarget) return;
+    onClick();
+  };
+
   return (
     createPortal(
       <CSSTransition
         mountOnEnter
         unmountOnExit
-        in={show}
-        classNames={animation}
-        timeout={duration}
+        in={visible}
+        classNames="fade"
+        timeout={250}
       >
         <Wrapper onClick={handleClick}>
           {children}
         </Wrapper>
-      </CSSTransition>,
-      containerElm
+      </CSSTransition>, document.body
     )
-  )
-}
+  );
+};
 
-
-export default Overlay
+export default Overlay;

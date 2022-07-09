@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {mainColor} from '../../../color';
+import {mainColor} from '../../../lib/color';
 
 const TagsWrapper = styled.section`
   font-size: 12px;

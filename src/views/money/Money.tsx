@@ -1,14 +1,15 @@
 import React, {useState} from 'react';
 import Layout from '../../components/Layout';
 import styled from 'styled-components';
-import {TagsSection} from './tagsSection/TagsSection';
-import {NotesSection} from './NotesSection';
-import {NumberPadSection} from './numberPadSection/NumberPadSection';
+import {TagsSection} from '../../components/money/tagsSection/TagsSection';
+import {NotesSection} from '../../components/money/NotesSection';
+import {NumberPadSection} from '../../components/money/numberPadSection/NumberPadSection';
 import Icon from '../../components/Icon';
 import {Link} from 'react-router-dom';
 import {InOrOut} from '../../components/InOrOut';
 import {useRecords} from '../../hooks/useRecords';
-import {mainColor} from '../../color';
+import {mainColor} from '../../lib/color';
+import {useTags} from '../../hooks/useTags';
 
 const MyLayout = styled(Layout)`
   display: flex;
@@ -39,11 +40,14 @@ const CategoryWrapper = styled.section`
 const defaultFormData = {
   category: '-' as ('-' | '+'),
   tagID: 0,
+  name: '',
+  icon: '',
   notes: '',
   amount: 0
 };
 
 function Money() {
+  const {tags} = useTags()
   const [formData, setFormData] = useState(defaultFormData);
   const {addRecord} = useRecords();
   const onChange = (obj: Partial<typeof formData>) => {
@@ -56,6 +60,7 @@ function Money() {
     }
     return false
   };
+
   const child2 = <Link to={'/setTag/' + formData.category}>
     <div>
       <Icon className="icon" name="settings"/>
@@ -70,8 +75,9 @@ function Money() {
                  onChange={category => onChange({category})}/>
       </CategoryWrapper>
 
-      <TagsSection ID={formData.tagID} category={formData.category}
-                   onChangeID={tagID => onChange({tagID})}
+      <TagsSection ID={formData.tagID} tags={tags}
+                   category={formData.category}
+                   onChangeTag={onChange}
                    lostTag={child2}/>
 
       <NotesSection value={formData.notes}

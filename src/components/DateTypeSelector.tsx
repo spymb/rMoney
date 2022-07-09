@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, {useState} from 'react';
-import {mainColor} from '../color';
+import {mainColor} from '../lib/color';
 
 const Wrapper = styled.section`
   font-size: 24px;

@@ -8,10 +8,10 @@ import {
 import Money from './views/money/Money';
 import NoMatch from './views/NoMatch';
 import styled from 'styled-components';
-import {SetTag} from './views/money/tagsSection/SetTag';
-import {AddTag} from './views/money/tagsSection/AddTag';
-import {Details} from './views/details/Details';
-import {Statistics} from './views/statistics/Statistics';
+import {SetTag} from './views/money/SetTag';
+import {AddTag} from './views/money/AddTag';
+import {Details} from './views/Details';
+import {Statistics} from './views/Statistics';
 
 const AppWrapper = styled.div`
   color: #333;

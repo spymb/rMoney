@@ -4,6 +4,8 @@ import dayjs from 'dayjs';
 
 export type RecordItem = {
   tagID: number
+  name?: string
+  icon?: string
   notes: string
   category: '-' | '+'
   amount: number

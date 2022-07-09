@@ -44,44 +44,25 @@ export type DatePickerType = 'year' | 'month' | 'date'
 interface DatePickerProps {
   date: Date,
   pickerType: DatePickerType
-  onChange?: (date: Date) => void
-  onOk?: (date: Date) => void
-  onCancel?: (date: Date) => void
+  onOk: (date: Date) => void
+  onCancel: () => void
   className?: string
   style?: CSSProperties
 }
 
 const DatePicker: FC<DatePickerProps> = (props) => {
-  const {date: pDate, pickerType, onOk, onChange, onCancel, ...restProps} = props
-  const [year, setYear] = useState(dayjs(pDate).year())
-  const [month, setMonth] = useState(dayjs(pDate).month() + 1)
-  const [date, setDate] = useState(dayjs(pDate).date())
+  const {date: now, pickerType, onOk, onCancel, ...restProps} = props
+  const [year, setYear] = useState(dayjs(now).year())
+  const [month, setMonth] = useState(dayjs(now).month() + 1)
+  const [date, setDate] = useState(dayjs(now).date())
 
   useEffect(() => {
-    const bodyTouchMoveHandler = (e: TouchEvent) => {
-      e.preventDefault()
-    }
+    const bodyTouchMoveHandler = (e: TouchEvent) => {e.preventDefault()}
+
     document.body.addEventListener('touchmove', bodyTouchMoveHandler, {passive: false})
-    return () => {
-      document.body.removeEventListener('touchmove', bodyTouchMoveHandler)
-    }
+
+    return () => {document.body.removeEventListener('touchmove', bodyTouchMoveHandler)}
   }, [])
-  const onYearChange = (val: string) => {
-    setYear(parseInt(val))
-  }
-  const onMonthChange = (val: string) => {
-    setMonth(parseInt(val))
-  }
-  const onDateChange = (val: string) => {
-    setDate(parseInt(val))
-  }
-  const yearList = []
-  for (let i = 0; i < 20; i++) {
-    yearList.unshift(dayjs().year() - i + '')
-  }
-  const showYear = pickerType === 'date' || pickerType === 'month' || pickerType === 'year'
-  const showMonth = pickerType === 'date' || pickerType === 'month'
-  const showDate = pickerType === 'date'
 
   let dateStr = ''
   if (pickerType === 'date') {
@@ -94,21 +75,36 @@ const DatePicker: FC<DatePickerProps> = (props) => {
     dateStr = `${year}`
   }
 
-  const daysInMonth =  dayjs().year(year).month(month - 1).daysInMonth()
-
-  const monthList = Array(12).fill(0).map((item, index) => index + 1 + '')
-
-  const dateList =  Array(daysInMonth).fill(0).map((item, index) => index + 1 + '')
-
   const onClickOk = () => {
     const fullDate = new Date(dayjs().year(year).month(month - 1).date(date).valueOf())
-    onChange && onChange(fullDate)
-    onOk && onOk(fullDate)
+    onOk(fullDate)
   }
   const onClickCancel = () => {
-    const fullDate = new Date(dayjs().year(year).month(month - 1).date(date).valueOf())
-    onCancel && onCancel(fullDate)
+    onCancel()
   }
+
+  const showYear = pickerType === 'date' || pickerType === 'month' || pickerType === 'year'
+  const showMonth = pickerType === 'date' || pickerType === 'month'
+  const showDate = pickerType === 'date'
+
+  const onYearChange = (val: string) => {
+    setYear(parseInt(val))
+  }
+  const onMonthChange = (val: string) => {
+    setMonth(parseInt(val))
+  }
+  const onDateChange = (val: string) => {
+    setDate(parseInt(val))
+  }
+
+  const yearList = []
+  for (let i = 0; i < 10; i++) {
+    yearList.unshift(dayjs().year() - i + '')
+  }
+  const monthList = Array(12).fill(0).map((item, index) => index + 1 + '')
+  const daysInMonth =  dayjs().year(year).month(month - 1).daysInMonth()
+  const dateList =  Array(daysInMonth).fill(0).map((item, index) => index + 1 + '')
+
   return (
     <Wrapper {...restProps}>
       <Header>
@@ -116,6 +112,7 @@ const DatePicker: FC<DatePickerProps> = (props) => {
         <header className="title">{dateStr}</header>
         <button className="ok-btn" onClick={onClickOk}>确定</button>
       </Header>
+
       <Container>
         {showYear && <PickerList onChange={onYearChange} value={year + ''} listData={yearList}/>}
         {showMonth && <PickerList onChange={onMonthChange} value={month + ''} listData={monthList}/>}

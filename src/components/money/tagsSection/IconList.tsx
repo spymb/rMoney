@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import React from 'react';
 import classNames from 'classnames';
-import Icon from '../../../components/Icon';
-import {mainColor} from '../../../color';
+import Icon from '../../Icon';
+import {mainColor} from '../../../lib/color';
 
 const Wrapper = styled.ul`
   display: flex;
@@ -41,18 +41,14 @@ const IconNames = ['canyin', 'custom', 'dushu', 'fushi', 'gongzi', 'jianzhi', 'j
 
 interface Props {
   iconName: string;
-  onChange?: (icon: string) => void;
   onChangeName: (name: string) => void;
 }
 
-
 const IconList: React.FC<Props> = (props) => {
   const selectedIconName = props.iconName || '';
-  const onToggleIcon = (name: string) => {
+  const onSelectIcon = (name: string) => {
     if (name !== selectedIconName) {
       props.onChangeName(name);
-    } else {
-      props.onChangeName('');
     }
   };
 
@@ -62,7 +58,7 @@ const IconList: React.FC<Props> = (props) => {
         const selected = classNames({'selected': iconName === props.iconName});
 
         return (
-          <li key={iconName} onClick={() => {onToggleIcon(iconName);}}
+          <li key={iconName} onClick={() => {onSelectIcon(iconName);}}
               className={selected}>
             <div>
               <Icon className="icon" name={iconName}/>
