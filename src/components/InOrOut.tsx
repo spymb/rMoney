@@ -6,15 +6,15 @@ type Props = {
 }
 
 const InOrOut: React.FC<Props> = (props) => {
-  const categoryMap = {'-': '支出', '+': '收入'};
   const [categoryList] = useState<('-' | '+')[]>(['-', '+']);
   const category = props.value;
+  const categoryMap = {'-': '支出', '+': '收入'};
 
   return (
     <ul>
       {
         categoryList.map(c =>
-          <li className={category === c ? 'selected' : ''}
+          <li className={c === category ? 'selected' : ''}
               onClick={() => {props.onChange(c);}}
               key={c}>
             {categoryMap[c]}

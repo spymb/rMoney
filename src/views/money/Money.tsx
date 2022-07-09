@@ -14,15 +14,9 @@ const MyLayout = styled(Layout)`
   display: flex;
   flex-direction: column;
 `;
-const defaultFormData = {
-  category: '-' as ('-' | '+'),
-  tagID: 0,
-  notes: '',
-  amount: 0
-};
 const CategoryWrapper = styled.section`
   font-size: 24px;
-  
+
   > ul {
     box-shadow: inset 0 -5px 5px -5px rgba(0, 0, 0, 0.25),
     inset 0 5px 5px -5px rgba(0, 0, 0, 0.25);
@@ -33,14 +27,22 @@ const CategoryWrapper = styled.section`
       width: 50%;
       text-align: center;
       padding: 16px 0;
-      
+
       &.selected {
         background: ${mainColor};
         color: white;
       }
     }
   }
-`
+`;
+
+const defaultFormData = {
+  category: '-' as ('-' | '+'),
+  tagID: 0,
+  notes: '',
+  amount: 0
+};
+
 function Money() {
   const [formData, setFormData] = useState(defaultFormData);
   const {addRecord} = useRecords();
@@ -49,8 +51,10 @@ function Money() {
   };
   const submit = () => {
     if (addRecord(formData)) {
-      setFormData(defaultFormData);
+      onChange({tagID: 0, notes: '', amount: 0});
+      return true
     }
+    return false
   };
   const child2 = <Link to={'/setTag/' + formData.category}>
     <div>

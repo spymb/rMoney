@@ -8,7 +8,6 @@ import PopUp from '../../components/date_picker/Popup';
 import {DateTypeSelector} from '../../components/DateTypeSelector';
 import RecordsList from './RecordsList';
 
-
 const TimeSelector = styled.div`
   box-shadow: inset 0 -5px 5px -5px rgba(0, 0, 0, 0.25);
   background: white;
@@ -23,15 +22,14 @@ const Details: FC = () => {
   const dateStr = dayjs(day).format(dateType === 'month' ? 'YYYY年M月' : 'YYYY年M月D日');
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-
   const handleDateClick = () => {
     setShowDatePicker(true);
   };
-  const handleOk = (d: Date) => {
-    setDay(d);
+  const handleCancel = () => {
     setShowDatePicker(false);
   };
-  const handleCancel = () => {
+  const handleOk = (d: Date) => {
+    setDay(d);
     setShowDatePicker(false);
   };
 

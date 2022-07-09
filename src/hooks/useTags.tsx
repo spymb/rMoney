@@ -2,7 +2,6 @@
 import React, {useEffect, useState} from 'react';
 import {createID} from '../lib/createID';
 import {useUpdate} from './useUpdate';
-import {useNavigate} from 'react-router-dom';
 
 export type Tag = {
   id: number;
@@ -13,7 +12,6 @@ export type Tag = {
 
 const useTags = () => {
   const [tags, setTags] = useState<Tag[]>([]);
-  useNavigate();
   useEffect(() => {
     let localTags = JSON.parse(window.localStorage.getItem('tags') || '[]');
     if (localTags.length === 0) {
@@ -31,6 +29,10 @@ const useTags = () => {
     }
     setTags(localTags);
   }, []);
+  useUpdate(() => {
+    window.localStorage.setItem('tags', JSON.stringify(tags));
+  }, [tags]);
+
   const findTag = (id: number) => tags.filter(tag => tag.id === id)[0];
   const findTagIndex = (id: number) => {
     let result = -1;
@@ -55,14 +57,12 @@ const useTags = () => {
       }));
       window.alert('成功修改标签名');
     }
-    window.location.reload();
   };
   const deleteTag = (id: number) => {
     const ids = tags.map(item => item.id);
     if (ids.indexOf(id) >= 0) {
       setTags(tags.filter(tag => tag.id !== id));
       window.alert('成功删除标签');
-      window.location.reload();
     } else {
       window.alert('请选择标签');
     }
@@ -80,16 +80,12 @@ const useTags = () => {
         setTags([...tags, {id: createID(), name: obj.name, icon: iconName, type: type}]);
         window.alert('成功添加标签');
       }
-      window.location.reload();
     }
   };
   const getTagName = (id: number) => {
     const tag = findTag(id);
     return tag ? tag.name : '';
   };
-  useUpdate(() => {
-    window.localStorage.setItem('tags', JSON.stringify(tags));
-  }, [tags]);
 
   return {tags, setTags, findTag, findTagIndex, deleteTag, addTag, getTagName, updateTag};
 };

@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import {FC, useRef} from 'react';
 import Icon from '../../../components/Icon';
-import {mainColor} from '../../../color';
 
 const Wrapper = styled.label`
   display: flex;
@@ -16,6 +15,7 @@ const IconWrapper = styled.span`
   width: 50px;
   height: 50px;
   border-radius: 10px;
+
   > .icon {
     font-size: 48px;
   }
@@ -34,37 +34,39 @@ const NameInput = styled.input`
 interface Props {
   tagID?: number;
   tagName?: string;
-  icon?: string;
+  icon: string;
   type?: '-' | '+' | '';
   onChangeName?: (ID: number, obj: { name: string }) => void;
   onTransName?: (obj: { name: string }) => void;
+  onChangeID?: (ID: number) => void;
 }
 
 const EditTag: FC<Props> = (props) => {
-  const {tagID, tagName, icon, onChangeName, onTransName} = props;
-  const holder = () => {
-    return onChangeName ? '修改标签名' : '添加标签名';
-  };
+  const {tagID, tagName, icon, onChangeName, onTransName, onChangeID} = props;
   const refInput = useRef<HTMLInputElement>(null);
   const blurer = () => {
     if (refInput.current !== null) {
       if (onChangeName && tagID) {
         onChangeName(tagID, {name: refInput.current.value});
+        onChangeID && onChangeID(0)
+        refInput.current.value = '';
+        refInput.current.placeholder = '修改标签名';
+      } else if (onTransName) {
+        onTransName({name: refInput.current.value});
       }
-      onTransName && onTransName({name: refInput.current.value});
     }
   };
 
   return (
     <Wrapper>
       <IconWrapper>
-        <Icon className="icon" name={icon} fill={mainColor}/>
+        <Icon name={icon} className="icon"/>
       </IconWrapper>
 
-      <NameInput type="text" defaultValue={tagName}
+      <NameInput type="text"
                  ref={refInput}
                  onBlur={blurer}
-                 placeholder={holder()} maxLength={5}/>
+                 placeholder={tagName} maxLength={5}/>
     </Wrapper>
   );
 };

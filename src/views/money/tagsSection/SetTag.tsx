@@ -1,6 +1,5 @@
 import React, {FC, useState} from 'react';
 import {TagsSection} from './TagsSection';
-import {EditTag} from './EditTag';
 import {Button} from '../../../components/Button';
 import {Space} from '../../../components/Space';
 import {Center} from '../../../components/Center';
@@ -12,36 +11,29 @@ import Layout from '../../../components/Layout';
 
 const SetTag: FC = () => {
   const navigate = useNavigate();
-  const [category] = useState<'-' | '+'>('-');
+  const {id: moneyType} = useParams();
   const [ID, setID] = useState<number>(0);
-  const {deleteTag, getTagName, findTag, updateTag} = useTags();
-  const tagName = getTagName(ID);
-  const tag = findTag(ID);
-  const iconName = tag ? tag.icon : 'tag';
-  let {id} = useParams();
-  let pathID = id as '-' | '+';
+  const [category] = useState<'-' | '+'>('-');
   const add = <Link to={'/addTag/' + category}>
     <div>
-      <Icon className="icon" name="tianjia"/>
+      <Icon name="tianjia" className="icon"/>
     </div>
     <span>添加</span>
   </Link>;
-
+  const {deleteTag} = useTags();
 
   return (
     <Layout>
       <Topbar>
         <Icon name="left" onClick={() => navigate(-1)}/>
-        <span>管理{pathID === '-' ? '支出' : '收入'}标签</span>
+        <span>管理{moneyType === '-' ? '支出' : '收入'}标签</span>
         <Icon/>
       </Topbar>
 
-      <EditTag icon={iconName} tagID={ID} tagName={tagName} onChangeName={updateTag}/>
-
-      <TagsSection category={category}
-                   lostTag={add}
-                   ID={ID}
-                   onChangeID={setID}/>
+      <TagsSection ID={ID}
+                   onChangeID={setID}
+                   category={category}
+                   lostTag={add}/>
 
       <Center>
         <Space/>

@@ -1,10 +1,11 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { RecordItem, useRecords } from '../../hooks/useRecords';
+import {RecordItem, useRecords} from '../../hooks/useRecords';
 import styled from 'styled-components';
-import { useTags } from '../../hooks/useTags';
+import {useTags} from '../../hooks/useTags';
 import Icon from '../../components/Icon';
-import { mainColor } from '../../color';
+import {mainColor} from '../../color';
+
 const FallBackMessage = styled.div`
   font-size: 20px;
   line-height: 160px;
@@ -22,6 +23,7 @@ const Item = styled.div`
   > .tags {
     display: flex;
     align-items: center;
+
     > .icon-wrapper {
       width: 40px;
       height: 40px;
@@ -37,7 +39,7 @@ const Item = styled.div`
       }
     }
   }
-  
+
   > .notes {
     margin-right: auto;
     margin-left: 16px;
@@ -63,9 +65,9 @@ interface Props {
 }
 
 const RecordsList: React.FunctionComponent<Props> = (props) => {
-  const { day, dateType } = props;
-  const { getSum, getRecordsByTime } = useRecords();
-  const { getTagName, findTag } = useTags();
+  const {day, dateType} = props;
+  const {getSum, getRecordsByTime} = useRecords();
+  const {getTagName, findTag} = useTags();
   const recordsByTime = getRecordsByTime(day, dateType);
   const hash: { [K: string]: RecordItem[] } = {};
 
@@ -78,21 +80,36 @@ const RecordsList: React.FunctionComponent<Props> = (props) => {
   });
   const array = Object.entries(hash)
     .sort((a, b) => {
-      if (a[0] === b[0]) return 0;
-      if (a[0] > b[0]) return -1;
-      if (a[0] < b[0]) return 1;
-      return 0;
+      return parseInt(b[0]) - parseInt(a[0]);
     });
 
-  return (
+  const beautify = (date: string) => {
+    const thisDay = dayjs(date);
+    const now = dayjs();
+    if (thisDay.isSame(now, 'day')) {
+      return '今天';
+    } else if (thisDay.isSame(now.subtract(1, 'day'), 'day')) {
+      return '昨天';
+    } else if (thisDay.isSame(now.subtract(2, 'day'), 'day')) {
+      return '前天';
+    } else if (thisDay.isSame(now, 'year')) {
+      return thisDay.format('M月D日');
+    } else {
+      return thisDay.format('YYYY年M月D日');
+    }
+  };
 
+  return (
     <div>
+
       {array.length === 0 ? <FallBackMessage>暂无数据</FallBackMessage> :
+
         array.map(([date, records]) =>
           <div key={date}>
+
             <TimeAndMoney>
               <div className="time">
-                {dayjs(date).format('YYYY年M月D日')}
+                {beautify(date)}
               </div>
 
               <div className="money">
@@ -105,14 +122,16 @@ const RecordsList: React.FunctionComponent<Props> = (props) => {
               </div>
             </TimeAndMoney>
 
-
             <div>
               {
-                records.map(r => {
+                records
+                  .sort((a, b) =>
+                    dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf())
+                  .map(r => {
                   return <Item key={r.createdAt}>
                     <div className="tags">
                       <span className="icon-wrapper">
-                        <Icon className="icon" name={findTag(r.tagID).icon} />
+                        <Icon className="icon" name={findTag(r.tagID).icon}/>
                       </span>
                       <span>{getTagName(r.tagID)}</span>
                     </div>
@@ -126,8 +145,10 @@ const RecordsList: React.FunctionComponent<Props> = (props) => {
                 })
               }
             </div>
+
           </div>)
       }
+
     </div>
   );
 };

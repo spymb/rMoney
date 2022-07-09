@@ -24,6 +24,7 @@ const Wrapper = styled.section`
     }
   }
   `
+
 type Props = {
   value1: 'date' | 'month' | 'year'
   value2: 'date' | 'month' | 'year'
@@ -32,17 +33,16 @@ type Props = {
 
 const DateTypeSelector: React.FC<Props> = (props) => {
   const {value1, value2} = props
-  const categoryMap = {'month': '月', 'year': '年', 'date': '日'};
-  const [categoryList] = useState<('date' | 'month' | 'year')[]>([value1, value2]);
   const category = value1;
+  const [categoryList] = useState<('date' | 'month' | 'year')[]>([value1, value2]);
+  const categoryMap = {'month': '月', 'year': '年', 'date': '日'};
 
   return (
     <Wrapper>
-
       <ul>
         {
           categoryList.map(c =>
-            <li className={category === c ? 'selected' : ''}
+            <li className={c === category ? 'selected' : ''}
                 onClick={() => {props.onChange(c);}}
                 key={c}>
               {categoryMap[c]}
