@@ -7,7 +7,7 @@ const Wrapper = styled.div`
   width: 100%;
   position: absolute;
   background-color: #fff;
-  max-width: 420px;
+  max-width: 450px;
   &.bottom {bottom: 0; left: 50%; transform: translate(-50%, 0%); }
 `
 

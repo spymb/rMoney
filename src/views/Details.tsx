@@ -24,6 +24,10 @@ const Details: FC = () => {
 
   const handleDateClick = () => {
     setShowDatePicker(true);
+    const dts =document.querySelector('.dateTypeSelector')
+    if(dts && dts.clientWidth > 450) {
+      window.alert('日期选择仅支持触屏，请使用手机体验');
+    }
   };
   const handleCancel = () => {
     setShowDatePicker(false);
@@ -35,7 +39,9 @@ const Details: FC = () => {
 
   return (
     <Layout>
-      <DateTypeSelector value1={dateType} value2={'month'} onChange={setDateType}/>
+      <div className='dateTypeSelector'>
+        <DateTypeSelector value1={dateType} value2={'month'} onChange={setDateType}/>
+      </div>
 
       <TimeSelector onClick={handleDateClick}>
         {dateStr}&#9660;

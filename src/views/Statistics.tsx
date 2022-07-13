@@ -68,6 +68,10 @@ const Statistics: React.FunctionComponent = () => {
   };
   const handleDateClick = () => {
     setDatePickerVisible(true);
+    const dts =document.querySelector('.dateTypeSelector')
+    if(dts && dts.clientWidth > 450) {
+      window.alert('日期选择仅支持触屏，请使用手机体验');
+    }
   };
 
   const outcome = getSum(records, '-', day.toISOString(), dateType) || 0;
@@ -75,7 +79,9 @@ const Statistics: React.FunctionComponent = () => {
 
   return (
     <Layout>
-      <DateTypeSelector value1={dateType} value2={'year'} onChange={setDateType}/>
+      <div className='dateTypeSelector'>
+        <DateTypeSelector value1={dateType} value2={'year'} onChange={setDateType}/>
+      </div>
 
       <TimeAndMoney>
         <div className="time" onClick={handleDateClick}>

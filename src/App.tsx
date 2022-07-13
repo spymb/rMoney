@@ -15,7 +15,7 @@ import {Statistics} from './views/Statistics';
 
 const AppWrapper = styled.div`
   color: #333;
-  max-width: 420px;
+  max-width: 451px;
   margin: 0 auto;
   background: #f5f5f5;
 `;
