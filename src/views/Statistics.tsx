@@ -103,6 +103,7 @@ const Statistics: React.FunctionComponent = () => {
       <RankList day={day} dateType={dateType} category={category}/>
 
       <PopUp
+        position='bottom'
         visible={datePickerVisible}
         onCancel={handleCancel}
       >

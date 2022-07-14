@@ -50,6 +50,7 @@ const Details: FC = () => {
       <RecordsList day={day} dateType={dateType}/>
 
       <PopUp
+        position='bottom'
         visible={showDatePicker}
         onCancel={handleCancel}
       >

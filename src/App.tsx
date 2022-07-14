@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   HashRouter as Router,
   Routes,
@@ -12,6 +12,9 @@ import {SetTag} from './views/money/SetTag';
 import {AddTag} from './views/money/AddTag';
 import {Details} from './views/Details';
 import {Statistics} from './views/Statistics';
+import Popup from 'components/date_picker/Popup';
+
+const rcode = require('./rcode.png')
 
 const AppWrapper = styled.div`
   color: #333;
@@ -19,8 +22,21 @@ const AppWrapper = styled.div`
   margin: 0 auto;
   background: #f5f5f5;
 `;
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 function App() {
+  const [visible, setVisible] = useState(false)
+  useEffect(()=> {
+    console.log(window.innerWidth);
+    if (window.innerWidth > 450) {
+      setVisible(true)
+    }
+  }, [])
+
   return (
     <AppWrapper>
       <Router>
@@ -34,8 +50,14 @@ function App() {
           <Route path="*" element={<NoMatch/>}/>
         </Routes>
       </Router>
+      <Popup position='center' visible={visible} onCancel={() => setVisible(false)}>
+        <p style={{textAlign: 'center'}}>为保证最佳用户体验</p>
+        <p style={{textAlign: 'center'}}>请使用手机扫码预览</p>
+        <Wrapper>
+          <img src={rcode} alt="rcode" style={{width: '250px'}}/>
+        </Wrapper>
+      </Popup>
     </AppWrapper>
-
   );
 }
 
