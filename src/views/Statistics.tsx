@@ -3,7 +3,7 @@ import Layout from '../components/Layout';
 import {Chart} from '../components/statistics/Chart';
 import {DateTypeSelector} from '../components/DateTypeSelector';
 import DatePicker from '../components/date_picker/DatePicker';
-import PopUp from '../components/date_picker/Popup';
+import PopUp from '../components/Popup';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
 import {mainColor} from '../lib/color';
@@ -68,8 +68,7 @@ const Statistics: React.FunctionComponent = () => {
   };
   const handleDateClick = () => {
     setDatePickerVisible(true);
-    const dts =document.querySelector('.dateTypeSelector')
-    if(dts && dts.clientWidth > 450) {
+    if (window.innerWidth > 450) {
       window.alert('日期选择仅支持触屏，请使用手机体验');
     }
   };
@@ -79,9 +78,7 @@ const Statistics: React.FunctionComponent = () => {
 
   return (
     <Layout>
-      <div className='dateTypeSelector'>
-        <DateTypeSelector value1={dateType} value2={'year'} onChange={setDateType}/>
-      </div>
+      <DateTypeSelector value1={dateType} value2={'year'} onChange={setDateType}/>
 
       <TimeAndMoney>
         <div className="time" onClick={handleDateClick}>
@@ -103,7 +100,7 @@ const Statistics: React.FunctionComponent = () => {
       <RankList day={day} dateType={dateType} category={category}/>
 
       <PopUp
-        position='bottom'
+        position="bottom"
         visible={datePickerVisible}
         onCancel={handleCancel}
       >

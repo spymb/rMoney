@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 import {mainColor} from '../lib/color';
 import DatePicker from '../components/date_picker/DatePicker';
-import PopUp from '../components/date_picker/Popup';
+import PopUp from '../components/Popup';
 import {DateTypeSelector} from '../components/DateTypeSelector';
 import RecordsList from '../components/statistics/RecordsList';
 
@@ -24,8 +24,7 @@ const Details: FC = () => {
 
   const handleDateClick = () => {
     setShowDatePicker(true);
-    const dts =document.querySelector('.dateTypeSelector')
-    if(dts && dts.clientWidth > 450) {
+    if (window.innerWidth > 450) {
       window.alert('日期选择仅支持触屏，请使用手机体验');
     }
   };
@@ -39,9 +38,7 @@ const Details: FC = () => {
 
   return (
     <Layout>
-      <div className='dateTypeSelector'>
-        <DateTypeSelector value1={dateType} value2={'month'} onChange={setDateType}/>
-      </div>
+      <DateTypeSelector value1={dateType} value2={'month'} onChange={setDateType}/>
 
       <TimeSelector onClick={handleDateClick}>
         {dateStr}&#9660;
@@ -50,7 +47,7 @@ const Details: FC = () => {
       <RecordsList day={day} dateType={dateType}/>
 
       <PopUp
-        position='bottom'
+        position="bottom"
         visible={showDatePicker}
         onCancel={handleCancel}
       >

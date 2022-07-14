@@ -12,9 +12,9 @@ import {SetTag} from './views/money/SetTag';
 import {AddTag} from './views/money/AddTag';
 import {Details} from './views/Details';
 import {Statistics} from './views/Statistics';
-import Popup from 'components/date_picker/Popup';
+import Popup from 'components/Popup';
 
-const rcode = require('./rcode.png')
+const rcode = require('./assets/rcode.png')
 
 const AppWrapper = styled.div`
   color: #333;
@@ -51,11 +51,11 @@ function App() {
         </Routes>
       </Router>
       <Popup position='center' visible={visible} onCancel={() => setVisible(false)}>
-        <p style={{textAlign: 'center'}}>为保证最佳用户体验</p>
-        <p style={{textAlign: 'center'}}>请使用手机扫码预览</p>
-        <Wrapper>
+        <div style={{textAlign: 'center'}}>
+          <p>为保证最佳用户体验</p>
+          <p>请使用手机扫码预览</p>
           <img src={rcode} alt="rcode" style={{width: '250px'}}/>
-        </Wrapper>
+        </div>
       </Popup>
     </AppWrapper>
   );
