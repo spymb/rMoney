@@ -47,7 +47,7 @@ const Nav = () => {
         <li>
           <NavLink to="/details">
             <Icon name="details"/>
-            流水
+            明细
           </NavLink>
         </li>
         <li>
